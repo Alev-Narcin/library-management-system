@@ -7,7 +7,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity(name = "Kitap")     // JPQL querylerinde kullanacağın isimi tanımla
+@Entity(name = "Kitap")     // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
 @Table(name="kitap")          // tablo adı
 public class BookEntity {
 
@@ -22,27 +22,29 @@ public class BookEntity {
     @Column(name="yazar", nullable = false, updatable = false, length = 64)
     private String authorName;
 
-    @Column(name="yayımcı", nullable = false, updatable = false, length = 64)
+    @Column(name="yayimci", nullable = false, updatable = false, length = 64)
     private String publisher;
 
+    //ENUM'lar 'type' görevi görür. String,Long gibi.
     @Enumerated(EnumType.ORDINAL)
-    @Column(name="tür", nullable = false, updatable = false)
+    @Column(name="tur", nullable = false, updatable = false)
     private BookType type;
 
-    @Column(name="stok_adeti", nullable = false)
+    @Column(name="stok_adedi", nullable = false)
     private Long   stock;
 
-    @Column(name="temin_türü", length = 64)
+    @Column(name="temin_turu", length = 64)
     private String supplyType;
 
-    @Column(name="temin_günü", nullable = false, updatable = false)
+    @Column(name="temin_gunu", nullable = false, updatable = false)
     private LocalDateTime supplyDate;
 
-    @OneToOne
-    @JoinColumn(name="person_id", foreignKey = @ForeignKey(name = "person_fk"))
-    private PersonEntity person;
+//    @OneToOne
+//    @JoinColumn(name="person_id", foreignKey = @ForeignKey(name = "person_fk"))
+//    private PersonEntity person;
 
     public BookEntity() {
+
         super();
     }
 
