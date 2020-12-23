@@ -14,7 +14,7 @@ public class BookEntity {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Integer id;
 
     // kolon tanımları, columnDefinition'ı kullanma
     @Column(name="isim", nullable = false, updatable = false, length = 64)
