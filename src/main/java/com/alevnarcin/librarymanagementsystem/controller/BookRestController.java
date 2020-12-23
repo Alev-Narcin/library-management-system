@@ -46,5 +46,10 @@ public class BookRestController {
     public  ResponseEntity<BookDto> update(BookDto bookDto){
         return new ResponseEntity<>(bookService.update(bookDto), HttpStatus.CREATED);
     }
+    @DeleteMapping("/{book_id}")
+    public ResponseEntity<BookDto> getBook(){
+        BookDto bookDto1 = bookService.find(bookDto.getId())
+        return new ResponseEntity<>(bookService.delete(BookDto bookDto));
+    }
 
 }
