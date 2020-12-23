@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @RestController // bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
-// Response browser'a dönülen HTTP mesajı oluyor.
+// Response, browser'a dönülen HTTP mesajı oluyor.
 @RequestMapping(value = "/books", produces = {"application/json"})
 // class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
 public class BookRestController {
@@ -24,10 +24,11 @@ public class BookRestController {
     }
 
 
-    @GetMapping("/{book_id}")
+
     // parantez { içerisinde tanımlı olan değişkenler
     // @PathVariable'ında annotate edilen parametre ile eşleştirilir.
     // yani method çağrılırken parametrenin değeri adres satırında karşılık gelen yerdeki değerdir.
+    @GetMapping("/{book_id}")
     public ResponseEntity<BookDto> getBook(@PathVariable("book_id") int id) {
         try {
             BookDto bookDto = bookService.find(id);
@@ -42,5 +43,6 @@ public class BookRestController {
     public BookDto create(@RequestBody BookDto bookDto) {
         return bookService.create(bookDto);
     }
+
 
 }
