@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController // bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
 // Response, browser'a dönülen HTTP mesajı oluyor.
@@ -20,10 +21,9 @@ public class BookRestController {
     private final BookService bookService;
 
     public BookRestController(BookService service) {
+
         this.bookService = Objects.requireNonNull(service);
     }
-
-
 
     // parantez { içerisinde tanımlı olan değişkenler
     // @PathVariable'ında annotate edilen parametre ile eşleştirilir.
@@ -40,9 +40,14 @@ public class BookRestController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/new", consumes = {"application/json"})
-    public BookDto create(@RequestBody BookDto bookDto) {
-        return bookService.create(bookDto);
+    public  ResponseEntity<BookDto> create(@RequestBody BookDto bookDto) {
+        return new ResponseEntity<>(bookService.create(bookDto), HttpStatus.CREATED);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("/{book_id}")
+    public  ResponseEntity<BookDto> update(BookDto bookDto){
+        return new ResponseEntity<>(bookService.update(bookDto), HttpStatus.CREATED);
+    }
 
 }
