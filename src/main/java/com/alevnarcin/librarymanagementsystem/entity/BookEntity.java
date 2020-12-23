@@ -1,7 +1,6 @@
 package com.alevnarcin.librarymanagementsystem.entity;
 
-import com.alevnarcin.librarymanagementsystem.BookType;
-import lombok.Builder;
+import com.alevnarcin.librarymanagementsystem.enumeration.BookType;
 import lombok.Data;
 
 import javax.persistence.*;

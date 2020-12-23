@@ -1,5 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
+import com.alevnarcin.librarymanagementsystem.dto.BookDto;
+import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.model.Book;
 import com.alevnarcin.librarymanagementsystem.service.BookService;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,10 @@ import java.util.Objects;
 // class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
 public class BookRestController {
 
-    private final BookService service;
+    private final BookService bookService;
 
     public BookRestController(BookService service) {
-        this.service = Objects.requireNonNull(service);
+        this.bookService = Objects.requireNonNull(service);
     }
 
 
@@ -26,10 +28,10 @@ public class BookRestController {
     // parantez { içerisinde tanımlı olan değişkenler
     // @PathVariable'ında annotate edilen parametre ile eşleştirilir.
     // yani method çağrılırken parametrenin değeri adres satırında karşılık gelen yerdeki değerdir.
-    public ResponseEntity<Book> getBook(@PathVariable("book_id") int id) {
+    public ResponseEntity<BookDto> getBook(@PathVariable("book_id") int id) {
         try {
-            Book book = service.find(id);
-            return new ResponseEntity<>(book, HttpStatus.OK);
+            BookDto bookDto = bookService.find(id);
+            return new ResponseEntity<>(bookDto, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -37,8 +39,8 @@ public class BookRestController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/new", consumes = {"application/json"})
-    public void create(@RequestBody Book book) {
-        service.create(book);
+    public BookDto create(@RequestBody BookDto bookDto) {
+        return bookService.create(bookDto);
     }
 
 }

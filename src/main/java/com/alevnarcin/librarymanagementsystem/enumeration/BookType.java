@@ -1,4 +1,4 @@
-package com.alevnarcin.librarymanagementsystem;
+package com.alevnarcin.librarymanagementsystem.enumeration;
 
 
 // ORDİNARY de index değerleri karıştığından dolayı başta oluşturulan sıra asla bozulmamlı.Yeni eklenecek kısım(kitap türü) sona eklenmeli.

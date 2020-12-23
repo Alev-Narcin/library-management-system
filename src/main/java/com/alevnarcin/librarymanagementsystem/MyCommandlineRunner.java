@@ -52,7 +52,7 @@ public class MyCommandlineRunner implements CommandLineRunner {
 //        }
 
 
-        bookService.update(entity);
+        //   bookService.update(entity);
 
     }
 }

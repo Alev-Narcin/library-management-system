@@ -1,5 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.service;
 
+import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
+import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.model.Book;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
@@ -13,31 +15,29 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookService {
 
-   private final BookRepository bookRepository;
+    private final BookRepository bookRepository;
+    private final BookConverter bookConverter;
 
-   public BookEntity update(BookEntity bookEntity) {
-      return bookRepository.save(bookEntity);
-   }
+    public BookDto update(BookDto bookDto) {
+        BookEntity bookEntity = bookConverter.bookDtoToBookEntity(bookDto);
+        BookEntity savedBookEntity = bookRepository.save(bookEntity);
+        return bookConverter.bookEntityToBookDto(savedBookEntity);
+    }
 
 
-   public Book find(int id) {
-      Optional<BookEntity> entity = bookRepository.findById(id);
-      if (entity.isPresent()) {
-         return convert(entity.get());
-      }
-      throw new NoSuchElementException();
-   }
+    public BookDto find(int id) {
+        BookEntity entity = bookRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        return bookConverter.bookEntityToBookDto(entity);
+    }
 
-   private BookEntity convert(Book book) {
-      throw new UnsupportedOperationException("implement");
-   }
+    public BookDto create(BookDto bookDto) {
+        // 1. convert dto to entity
 
-   private Book convert(BookEntity entity) {
-      // Book'a dönüştür.
-      throw new UnsupportedOperationException("implement");
-   }
+        // 2. save entity to database
 
-   public void create(Book book) {
-      bookRepository.save(convert(book));
-   }
+        // 3. convert entity to dto
+
+        // 4. return dto
+        return bookDto;
+    }
 }
