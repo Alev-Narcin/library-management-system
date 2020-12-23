@@ -3,13 +3,11 @@ package com.alevnarcin.librarymanagementsystem.service;
 import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
-import com.alevnarcin.librarymanagementsystem.model.Book;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

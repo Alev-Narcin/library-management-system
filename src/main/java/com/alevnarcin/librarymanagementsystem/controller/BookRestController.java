@@ -1,8 +1,6 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
-import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
-import com.alevnarcin.librarymanagementsystem.model.Book;
 import com.alevnarcin.librarymanagementsystem.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController // bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
 // Response, browser'a dönülen HTTP mesajı oluyor.
