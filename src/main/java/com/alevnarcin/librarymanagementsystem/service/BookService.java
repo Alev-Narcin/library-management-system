@@ -36,6 +36,8 @@ public class BookService {
     }
 
     public BookDto delete(BookDto bookDto) {
+        BookEntity entity = bookRepository.findById(bookDto.getId()).orElseThrow(NoSuchElementException::new);
+        return bookConverter.bookEntityToBookDto(entity);
 
     }
 

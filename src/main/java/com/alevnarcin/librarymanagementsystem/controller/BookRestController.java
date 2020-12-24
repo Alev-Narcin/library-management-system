@@ -16,6 +16,7 @@ import java.util.Objects;
 public class BookRestController {
 
     private final BookService bookService;
+    private int id;
 
     public BookRestController(BookService service) {
 
@@ -46,10 +47,12 @@ public class BookRestController {
     public  ResponseEntity<BookDto> update(BookDto bookDto){
         return new ResponseEntity<>(bookService.update(bookDto), HttpStatus.CREATED);
     }
+
     @DeleteMapping("/{book_id}")
-    public ResponseEntity<BookDto> getBook(){
-        BookDto bookDto1 = bookService.find(bookDto.getId())
-        return new ResponseEntity<>(bookService.delete(BookDto bookDto));
+    public ResponseEntity<BookDto> delete(@PathVariable("book_id") int id){
+        BookDto bookDto = bookService.find(id);
+        return new ResponseEntity<>(bookDto, HttpStatus.OK);
+
     }
 
 }
