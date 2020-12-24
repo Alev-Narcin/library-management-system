@@ -14,6 +14,8 @@ import java.util.Objects;
 // Response, browser'a dönülen HTTP mesajı oluyor.
 @RequestMapping(value = "/books", produces = {"application/json"})
 // class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
+
+
 public class BookRestController {
 
     private final BookService bookService;
