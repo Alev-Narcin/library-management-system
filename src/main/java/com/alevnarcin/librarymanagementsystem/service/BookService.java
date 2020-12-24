@@ -6,6 +6,7 @@ import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
@@ -29,10 +30,15 @@ public class BookService {
         return bookDto;                                                     // 4. return dto
     }
 
-    public BookDto update(BookDto bookDto) {
-        BookEntity bookEntity = bookConverter.bookDtoToBookEntity(bookDto);
-        BookEntity savedBookEntity = bookRepository.save(bookEntity);
-        return bookConverter.bookEntityToBookDto(savedBookEntity);
+    public BookDto update(BookDto bookDto, Integer book_id) {
+        BookEntity bookEntity = bookRepository.findById(book_id).orElseThrow(NoSuchElementException::new);
+
+        bookEntity.setName(bookDto.getName());
+        bookEntity.setPublisher(bookDto.getPublisher());
+        bookEntity.setAuthorName(bookDto.getAuthorName());
+
+
+        return bookConverter.bookEntityToBookDto(bookRepository.save(bookEntity));
     }
 
     public BookDto delete(BookDto bookDto) {

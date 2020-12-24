@@ -1,11 +1,15 @@
 package com.alevnarcin.librarymanagementsystem.dto;
 
 import com.alevnarcin.librarymanagementsystem.enumeration.BookType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class BookDto {
