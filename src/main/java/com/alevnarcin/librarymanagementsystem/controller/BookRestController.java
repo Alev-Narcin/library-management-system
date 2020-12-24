@@ -37,19 +37,19 @@ public class BookRestController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/new", consumes = {"application/json"})
-    public  ResponseEntity<BookDto> create(@RequestBody BookDto bookDto) {
+    public ResponseEntity<BookDto> create(@RequestBody BookDto bookDto) {
         return new ResponseEntity<>(bookService.create(bookDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{bookId}")
-    public  ResponseEntity<BookDto> update(@RequestBody BookDto bookDto, @PathVariable("bookId") Integer bookId){
-        return new ResponseEntity<>(bookService.update(bookDto, bookId), HttpStatus.CREATED);
+    public ResponseEntity<BookDto> update(@RequestBody BookDto bookDto, @PathVariable("bookId") Integer bookId) {
+        return new ResponseEntity<>(bookService.update(bookDto, bookId), HttpStatus.OK);
     }
 
     @DeleteMapping("/{bookId}")
-    public ResponseEntity<BookDto> delete(@PathVariable("bookId") Integer bookId){
-        BookDto bookDto = bookService.find(bookId);
-        return new ResponseEntity<>(bookDto, HttpStatus.OK);
+    public ResponseEntity<Void> delete(@PathVariable("bookId") Integer bookId) {
+        bookService.delete(bookId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 

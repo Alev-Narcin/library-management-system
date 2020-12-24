@@ -37,15 +37,11 @@ public class BookService {
         bookEntity.setPublisher(bookDto.getPublisher());
         bookEntity.setAuthorName(bookDto.getAuthorName());
 
-
         return bookConverter.bookEntityToBookDto(bookRepository.save(bookEntity));
     }
 
-    public BookDto delete(BookDto bookDto) {
-        BookEntity entity = bookRepository.findById(bookDto.getId()).orElseThrow(NoSuchElementException::new);
-        return bookConverter.bookEntityToBookDto(entity);
-
+    public void delete(Integer bookId) {
+        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        bookRepository.delete(bookEntity);
     }
-
-
 }
