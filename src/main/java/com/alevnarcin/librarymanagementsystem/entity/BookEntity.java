@@ -29,21 +29,18 @@ public class BookEntity {
 
     //ENUM'lar 'type' görevi görür. String,Long gibi.
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "tur", nullable = true, updatable = false)
+    //Aşk,macera,roman,hikaye,polisiye vb.
+    @Column(name = "tur", updatable = false)
     private BookType type;
 
-    @Column(name = "stok_adedi", nullable = true)
+    @Column(name = "stok_adedi")
     private Long stock;
-
+    //bağış,satın alma gibi
     @Column(name = "temin_turu", length = 64)
     private String supplyType;
 
     @Column(name = "temin_gunu", nullable = false, updatable = false)
     private LocalDateTime supplyDate;
-
-//    @OneToOne
-//    @JoinColumn(name="person_id", foreignKey = @ForeignKey(name = "person_fk"))
-//    private PersonEntity person;
 
     public BookEntity() {
 

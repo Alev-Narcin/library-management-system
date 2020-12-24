@@ -4,6 +4,7 @@ import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
+import com.alevnarcin.librarymanagementsystem.validation.BookValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,8 @@ public class BookService {
     }
 
     public BookDto create(BookDto bookDto) {
+        BookValidation.validateBook(bookDto);
+
         BookEntity bookEntity = bookConverter.bookDtoToBookEntity(bookDto);  // 1. convert dto to entity
         BookEntity savedBookEntity = bookRepository.save(bookEntity);       // 2. save entity to database
         bookDto = bookConverter.bookEntityToBookDto(savedBookEntity);       // 3. convert entity to dto

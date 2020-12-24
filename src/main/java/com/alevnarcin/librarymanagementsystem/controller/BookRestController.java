@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-@RestController // bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
+@RestController
+// bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
 // Response, browser'a dönülen HTTP mesajı oluyor.
 @RequestMapping(value = "/books", produces = {"application/json"})
 // class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
