@@ -6,13 +6,14 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity(name = "Kitap")         // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
 @Table(name = "kitap")          // tablo adı
 @Data                           // Lombok annotation'ı getter ve setterları yaratıyor, required args constructor, equals and hashCode methodlarını otomatik yaratıyor.
 public class BookEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     // kolon tanımları, columnDefinition'ı kullanma
@@ -26,7 +27,7 @@ public class BookEntity {
     private String publisher;
 
     //ENUM'lar 'type' görevi görür. String yada ORDINAL olabilir.
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     //Aşk,macera,roman,hikaye,polisiye vb.
     @Column(name = "tur", updatable = false)
     private BookType type;

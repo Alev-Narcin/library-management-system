@@ -9,13 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-@RestController
-// bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
-// Response, browser'a dönülen HTTP mesajı oluyor.
-@RequestMapping(value = "/books", produces = {"application/json"})
-// class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
-
-
+@RestController    // bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
+                   // Response, browser'a dönülen HTTP mesajı oluyor.
+@RequestMapping(value = "/books", produces = {"application/json"})     // class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
 public class BookRestController {
 
     private final BookService bookService;
@@ -28,8 +24,9 @@ public class BookRestController {
     // parantez { içerisinde tanımlı olan değişkenler
     // @PathVariable'ında annotate edilen parametre ile eşleştirilir.
     // yani method çağrılırken parametrenin değeri adres satırında karşılık gelen yerdeki değerdir.
-    @GetMapping("/{book_id}")
-    public ResponseEntity<BookDto> getBook(@PathVariable("book_id") int id) {
+
+    @GetMapping("/{bookId}")
+    public ResponseEntity<BookDto> get(@PathVariable("bookId") int id) {
         try {
             BookDto bookDto = bookService.find(id);
             return new ResponseEntity<>(bookDto, HttpStatus.OK);
