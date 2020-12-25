@@ -29,8 +29,8 @@ public class BookService {
 
         BookEntity bookEntity = bookConverter.bookDtoToBookEntity(bookDto);  // 1. convert dto to entity
         BookEntity savedBookEntity = bookRepository.save(bookEntity);       // 2. save entity to database
-        bookDto = bookConverter.bookEntityToBookDto(savedBookEntity);       // 3. convert entity to dto
-        return bookDto;                                                     // 4. return dto
+        return bookConverter.bookEntityToBookDto(savedBookEntity);       // 3. convert entity to dto
+        // 4. return dto
     }
 
     public BookDto update(BookDto bookDto, Integer book_id) {

@@ -4,10 +4,7 @@ import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.service.PersonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -33,6 +30,10 @@ public class PersonRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    public ResponseEntity<PersonDto> create(@RequestBody PersonDto personDto) {
+        return new ResponseEntity<>(personService.create(personDto), HttpStatus.CREATED);
     }
 
 

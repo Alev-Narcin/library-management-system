@@ -24,11 +24,12 @@ public class PersonService {
     }
 
 
+    public PersonDto create(PersonDto personDto) {
+        PersonEntity personEntity = personConverter.personDtoToPersonEntity(personDto);
+        PersonEntity savedPersonEntitiy = personRepository.save(personEntity);
+        return personConverter.personEntityToPersonDto(savedPersonEntitiy);
 
-
-
-
-
+    }
 
 
 }
