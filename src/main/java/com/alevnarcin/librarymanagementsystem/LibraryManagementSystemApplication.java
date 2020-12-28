@@ -20,9 +20,9 @@ public class LibraryManagementSystemApplication {
 
     // method adı ile bir tane CommandLineRunner bean'i yarat.
     // Autowired olarak CommandLineRunner istenen yerlere bu yaratılan Bean'ı kullanabiliyor.
-    @Bean
-    CommandLineRunner Saver(@Autowired BookRepository bookRepo, @Autowired PersonRepository personRepository) {
-
-        return new MyCommandlineRunner(bookRepo, personRepository);
-    }
+//    @Bean
+//    CommandLineRunner Saver(@Autowired BookRepository bookRepo, @Autowired PersonRepository personRepository) {
+//
+//        return new MyCommandlineRunner(bookRepo, personRepository);
+//    }
 }

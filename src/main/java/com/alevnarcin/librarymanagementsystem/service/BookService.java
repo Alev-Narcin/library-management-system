@@ -27,18 +27,21 @@ public class BookService {
     public BookDto create(BookDto bookDto) {
         BookValidation.validateBook(bookDto);
 
+
         BookEntity bookEntity = bookConverter.bookDtoToBookEntity(bookDto);  // 1. convert dto to entity
         BookEntity savedBookEntity = bookRepository.save(bookEntity);       // 2. save entity to database
         return bookConverter.bookEntityToBookDto(savedBookEntity);       // 3. convert entity to dto
         // 4. return dto
     }
 
-    public BookDto update(BookDto bookDto, Integer book_id) {
-        BookEntity bookEntity = bookRepository.findById(book_id).orElseThrow(NoSuchElementException::new);
+    public BookDto update(BookDto bookDto, Integer bookId) {
+        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
 
         bookEntity.setName(bookDto.getName());
         bookEntity.setPublisher(bookDto.getPublisher());
         bookEntity.setAuthorName(bookDto.getAuthorName());
+        bookEntity.setSupplyType(bookDto.getSupplyType());
+        bookEntity.setStock(bookDto.getStock());
 
         return bookConverter.bookEntityToBookDto(bookRepository.save(bookEntity));
     }

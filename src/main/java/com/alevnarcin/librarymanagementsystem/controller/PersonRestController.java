@@ -15,9 +15,8 @@ public class PersonRestController {
 
     private final PersonService personService;
 
-    public PersonRestController(PersonService personService) {
-
-        this.personService = Objects.requireNonNull(personService);
+    public PersonRestController(PersonService service) {
+        this.personService = Objects.requireNonNull(service);
     }
 
     @GetMapping("/{personId}")
@@ -32,9 +31,26 @@ public class PersonRestController {
 
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value = "/new", consumes = {"application/json"})
     public ResponseEntity<PersonDto> create(@RequestBody PersonDto personDto) {
         return new ResponseEntity<>(personService.create(personDto), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{personId}")
+    public ResponseEntity<PersonDto> update(@RequestBody PersonDto personDto, @PathVariable("personId") Integer personId) {
 
+        return new ResponseEntity<>(personService.update(personDto, personId), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{personId}")
+    public ResponseEntity<Void> delete(@PathVariable("personId") Integer personId) {
+        personService.delete(personId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/get-book/{personId}/{bookId}")
+    public ResponseEntity<PersonDto> getBook(@PathVariable("personId") Integer personId, @PathVariable("bookId") Integer bookId) {
+        return ResponseEntity.ok(personService.getBook(personId, bookId));
+    }
 }

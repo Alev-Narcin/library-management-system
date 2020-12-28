@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.time.LocalDateTime;
 
 // Spring başladıktan sonra istediğin kodu çalıştırmak için CommandLineRunner interface'ini implement ediyorsun.
@@ -27,6 +30,16 @@ public class MyCommandlineRunner implements CommandLineRunner {
 
         saveBook();
         savePerson();
+        saveCheckout();
+
+    }
+
+    private void saveCheckout() {
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PersonEntity");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+
 
     }
 
@@ -62,6 +75,12 @@ public class MyCommandlineRunner implements CommandLineRunner {
     private void saveEntity(PersonEntity entity) {
 
         personRepo.save(entity);
+    }
+
+    public class Checkout {
+
+
+
     }
 
 }

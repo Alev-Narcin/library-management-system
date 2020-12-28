@@ -36,8 +36,9 @@ public class BookRestController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "/new", consumes = {"application/json"})
-    public ResponseEntity<BookDto> create(@RequestBody BookDto bookDto) {
+    @PostMapping(value = "/new", consumes={"application/json"})
+    public ResponseEntity<BookDto>create(@RequestBody BookDto bookDto) {
+
         return new ResponseEntity<>(bookService.create(bookDto), HttpStatus.CREATED);
     }
 

@@ -1,20 +1,18 @@
 package com.alevnarcin.librarymanagementsystem.entity;
 
+import com.alevnarcin.librarymanagementsystem.entity.base.BaseEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.BookType;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.*;
 
 
 @Entity(name = "Kitap")         // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
 @Table(name = "kitap")          // tablo adı
 @Data                           // Lombok annotation'ı getter ve setterları yaratıyor, required args constructor, equals and hashCode methodlarını otomatik yaratıyor.
-public class BookEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class BookEntity extends BaseEntity {
 
     // kolon tanımları, columnDefinition'ı kullanma
     @Column(name = "isim", nullable = false, length = 64)
@@ -46,5 +44,7 @@ public class BookEntity {
         super();
     }
 
-
+    // RELATIONS
+    @ManyToMany(mappedBy = "bookEntities")
+    private Set<PersonEntity> personEntities = new HashSet<>();
 }

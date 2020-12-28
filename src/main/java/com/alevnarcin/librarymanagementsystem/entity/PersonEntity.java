@@ -1,25 +1,23 @@
 package com.alevnarcin.librarymanagementsystem.entity;
 
 
+import com.alevnarcin.librarymanagementsystem.entity.base.BaseEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.PersonType;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Data
 @Entity(name = "Kisi")
 @Table(name = "kisi")
-public class PersonEntity {
+@EqualsAndHashCode(of = "id")
+public class PersonEntity extends BaseEntity {
 
-    @Id
-    @GeneratedValue
-    private Integer id;
-
-    @Column(name = "TC", length = 11, nullable = false, updatable = false)
+    @Column(name = "TC", length = 11, nullable = false)
     private String TC;
 
     @Column(name = "ad_Soyad", length = 25, nullable = false)
@@ -41,9 +39,17 @@ public class PersonEntity {
     private String address;
 
     public PersonEntity(){
-
         super();
-
     }
 
+    // RELATIONS
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+    })
+    @JoinTable(name= "kisi_kitap",
+            joinColumns = @JoinColumn(name = "personId"),
+            inverseJoinColumns = @JoinColumn(name = "bookId")
+    )
+    private Set<BookEntity> bookEntities = new HashSet<>();
 }
