@@ -2,7 +2,10 @@ package com.alevnarcin.librarymanagementsystem.entity;
 
 import com.alevnarcin.librarymanagementsystem.entity.base.BaseEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.BookType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +14,9 @@ import java.util.*;
 
 @Entity(name = "Kitap")         // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
 @Table(name = "kitap")          // tablo adı
-@Data                           // Lombok annotation'ı getter ve setterları yaratıyor, required args constructor, equals and hashCode methodlarını otomatik yaratıyor.
+@Getter
+@Setter
+// Lombok annotation'ı getter ve setterları yaratıyor, required args constructor, equals and hashCode methodlarını otomatik yaratıyor.
 public class BookEntity extends BaseEntity {
 
     // kolon tanımları, columnDefinition'ı kullanma
@@ -44,7 +49,11 @@ public class BookEntity extends BaseEntity {
         super();
     }
 
+
     // RELATIONS
-    @ManyToMany(mappedBy = "bookEntities")
+    @ManyToMany
+    @JsonIgnoreProperties(value = "bookEntities", allowSetters = true)
     private Set<PersonEntity> personEntities = new HashSet<>();
+
+
 }

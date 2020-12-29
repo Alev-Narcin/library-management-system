@@ -1,6 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
+import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.Objects;
 @RequestMapping(value = "/books", produces = {"application/json"})     // class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
 public class BookRestController {
 
-    private final BookService bookService;
+    private BookService bookService;
 
     public BookRestController(BookService service) {
 
@@ -53,5 +54,12 @@ public class BookRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
+
+    @GetMapping("/get-person/{bookId}/{personId}")
+    public ResponseEntity<PersonEntity> getPerson(@PathVariable("bookId") Integer bookId, @PathVariable("personId") Integer personId) {
+        return ResponseEntity.ok(bookService.getPerson(bookId,personId));
+ }
+
+
 
 }

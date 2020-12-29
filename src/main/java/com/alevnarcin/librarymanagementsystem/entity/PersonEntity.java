@@ -3,15 +3,18 @@ package com.alevnarcin.librarymanagementsystem.entity;
 
 import com.alevnarcin.librarymanagementsystem.entity.base.BaseEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.PersonType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
-
-@Data
+@Getter
+@Setter
 @Entity(name = "Kisi")
 @Table(name = "kisi")
 @EqualsAndHashCode(of = "id")
@@ -43,13 +46,13 @@ public class PersonEntity extends BaseEntity {
     }
 
     // RELATIONS
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
-    })
+    @ManyToMany
     @JoinTable(name= "kisi_kitap",
-            joinColumns = @JoinColumn(name = "personId"),
-            inverseJoinColumns = @JoinColumn(name = "bookId")
-    )
+            joinColumns = @JoinColumn(name = "personId", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "bookId", referencedColumnName = "id"))
+    @JsonIgnoreProperties(value = "personEntities", allowSetters = true)
     private Set<BookEntity> bookEntities = new HashSet<>();
+
+
+
 }

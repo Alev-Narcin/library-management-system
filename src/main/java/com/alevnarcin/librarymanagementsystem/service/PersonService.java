@@ -3,9 +3,11 @@ package com.alevnarcin.librarymanagementsystem.service;
 
 import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.converter.PersonConverter;
+import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
+import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class PersonService {
     private final PersonConverter personConverter;
     private final BookService bookService;
     private final BookConverter bookConverter;
+    private final BookRepository bookRepository;
 
     public PersonDto find(int id) {
         PersonEntity entity = personRepository.findById(id).orElseThrow(NoSuchElementException::new);
@@ -51,10 +54,13 @@ public class PersonService {
         personRepository.delete(personEntity);
     }
 
-    public PersonDto getBook(Integer personId, Integer bookId) {
-        PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
-        BookEntity bookEntity = bookConverter.bookDtoToBookEntity(bookService.find(bookId));
-        personEntity.getBookEntities().add(bookEntity);
-        return personConverter.personEntityToPersonDto(personRepository.save(personEntity));
+
+    public BookEntity getBook(Integer personId, Integer bookId) {
+        //PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        //personEntity.getBookEntities().add(bookEntity);
+        //return personConverter.bookEntityToBookDto(BookEntity);
+        return bookEntity;
     }
+
 }
