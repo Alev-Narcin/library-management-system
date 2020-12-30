@@ -3,8 +3,10 @@ package com.alevnarcin.librarymanagementsystem.controller;
 
 import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
+import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.service.PersonService;
 import jdk.nashorn.internal.objects.annotations.Constructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import javax.validation.Valid;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/persons", produces = {"application/json"})
 public class PersonRestController {
@@ -23,7 +26,6 @@ public class PersonRestController {
 
         this.personService = Objects.requireNonNull(service);
     }
-
 
 
     @GetMapping("/{personId}")
@@ -56,7 +58,7 @@ public class PersonRestController {
     }
 
     @GetMapping("/get-book/{personId}/{bookId}")
-    public ResponseEntity<BookEntity> getBook(@PathVariable("personId") Integer personId, @PathVariable("bookId") Integer bookId) {
+    public ResponseEntity<PersonEntity> getBook(@PathVariable("personId") Integer personId, @PathVariable("bookId") Integer bookId) {
         return  ResponseEntity.ok(personService.getBook(personId,bookId));
     }
 }
