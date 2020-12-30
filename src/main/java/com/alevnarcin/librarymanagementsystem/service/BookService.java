@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class BookService {
@@ -30,7 +31,7 @@ public class BookService {
         this.personConverter = personConverter;
         this.personRepository = personRepository;
 
-        BookRepository bean = applicationContext.getBean(BookRepository.class);
+        //BookRepository bean = applicationContext.getBean(BookRepository.class);
 
     }
 
@@ -70,11 +71,11 @@ public class BookService {
     }
 
     public PersonEntity getPerson(Integer bookId, Integer personId) {
-//        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
         PersonEntity personEntity = personRepository.findById(personId).orElse(null);
-//        bookEntity.getPersonEntities().add(personEntity);
-//        return bookConverter.bookEntityToBookDto(bookRepository.save(bookEntity));
-        return personEntity;
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        //Set<BookEntity> bookEntities = personEntity.getBookEntities();
+
+        return null;
     }
 
 }

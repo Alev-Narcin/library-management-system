@@ -58,8 +58,5 @@ public class BookRestController {
     @GetMapping("/get-person/{bookId}/{personId}")
     public ResponseEntity<PersonEntity> getPerson(@PathVariable("bookId") Integer bookId, @PathVariable("personId") Integer personId) {
         return ResponseEntity.ok(bookService.getPerson(bookId,personId));
- }
-
-
-
+    }
 }

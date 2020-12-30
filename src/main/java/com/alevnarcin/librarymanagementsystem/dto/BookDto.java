@@ -22,4 +22,5 @@ public class BookDto {
     private Long stock;
     private String supplyType;
     private LocalDateTime supplyDate;
+    private String serial_number;
 }

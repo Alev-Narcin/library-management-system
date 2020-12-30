@@ -10,19 +10,30 @@ import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class PersonService {
 
     private final PersonRepository personRepository;
     private final PersonConverter personConverter;
-    private final BookService bookService;
-    private final BookConverter bookConverter;
     private final BookRepository bookRepository;
+    private final BookConverter bookConverter;
+
+    @Autowired
+    public PersonService(PersonRepository personRepository, PersonConverter personConverter, BookRepository bookRepository, BookConverter bookConverter) {
+        this.personRepository = personRepository;
+        this.personConverter = personConverter;
+        this.bookRepository = bookRepository;
+        this.bookConverter = bookConverter;
+    }
 
     public PersonDto find(int id) {
         PersonEntity entity = personRepository.findById(id).orElseThrow(NoSuchElementException::new);
@@ -30,10 +41,12 @@ public class PersonService {
     }
 
 
+    @Transactional
     public PersonDto create(PersonDto personDto) {
 
         PersonEntity personEntity = personConverter.personDtoToPersonEntity(personDto);
         PersonEntity savedPersonEntitiy = personRepository.save(personEntity);
+
         return personConverter.personEntityToPersonDto(savedPersonEntitiy);
 
     }
@@ -55,12 +68,12 @@ public class PersonService {
     }
 
 
-    public BookEntity getBook(Integer personId, Integer bookId) {
-        //PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
+    public PersonEntity getBook(Integer personId, Integer bookId) {
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
-        //personEntity.getBookEntities().add(bookEntity);
-        //return personConverter.bookEntityToBookDto(BookEntity);
-        return bookEntity;
+        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        personEntity.getBookEntities().add(bookEntity);
+
+        return  personRepository.save(personEntity);
     }
 
 }

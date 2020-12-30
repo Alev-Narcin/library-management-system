@@ -2,7 +2,9 @@ package com.alevnarcin.librarymanagementsystem.entity;
 
 import com.alevnarcin.librarymanagementsystem.entity.base.BaseEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.BookType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +20,10 @@ import java.util.*;
 @Setter
 // Lombok annotation'ı getter ve setterları yaratıyor, required args constructor, equals and hashCode methodlarını otomatik yaratıyor.
 public class BookEntity extends BaseEntity {
+
+
+    @Column(name = "seri_no", nullable = false, unique = true)
+    private String serial_number;
 
     // kolon tanımları, columnDefinition'ı kullanma
     @Column(name = "isim", nullable = false, length = 64)
@@ -49,11 +55,18 @@ public class BookEntity extends BaseEntity {
         super();
     }
 
-
-    // RELATIONS
-    @ManyToMany
-    @JsonIgnoreProperties(value = "bookEntities", allowSetters = true)
-    private Set<PersonEntity> personEntities = new HashSet<>();
+    @ManyToOne
+    //@JsonIgnoreProperties(value = "personEntities", allowSetters = true)
+    private PersonEntity personEntity;
 
 
+    public PersonEntity getPersonEntity() {
+
+        return personEntity;
+    }
+
+    public void setPersonEntity(PersonEntity personEntity) {
+
+        this.personEntity = personEntity;
+    }
 }

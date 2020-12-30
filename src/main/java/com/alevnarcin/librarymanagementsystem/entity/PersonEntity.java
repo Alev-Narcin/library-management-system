@@ -17,7 +17,6 @@ import java.util.*;
 @Setter
 @Entity(name = "Kisi")
 @Table(name = "kisi")
-@EqualsAndHashCode(of = "id")
 public class PersonEntity extends BaseEntity {
 
     @Column(name = "TC", length = 11, nullable = false)
@@ -46,13 +45,17 @@ public class PersonEntity extends BaseEntity {
     }
 
     // RELATIONS
-    @ManyToMany
-    @JoinTable(name= "kisi_kitap",
-            joinColumns = @JoinColumn(name = "personId", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "bookId", referencedColumnName = "id"))
-    @JsonIgnoreProperties(value = "personEntities", allowSetters = true)
+    @OneToMany(mappedBy = "personEntity")
     private Set<BookEntity> bookEntities = new HashSet<>();
 
+    public Set<BookEntity> getBookEntities() {
 
+        return bookEntities;
+    }
 
+    public void setBookEntities(Set<BookEntity> bookEntities) {
+
+        this.bookEntities = bookEntities;
+
+    }
 }
