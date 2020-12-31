@@ -41,7 +41,6 @@ public class PersonService {
     }
 
 
-    @Transactional
     public PersonDto create(PersonDto personDto) {
 
         PersonEntity personEntity = personConverter.personDtoToPersonEntity(personDto);
@@ -68,12 +67,12 @@ public class PersonService {
     }
 
 
-    public PersonEntity getBook(Integer personId, Integer bookId) {
+    public BookEntity getBook(Integer personId, Integer bookId) {
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
         PersonEntity personEntity = personRepository.findById(personId).orElse(null);
-        personEntity.getBookEntities().add(bookEntity);
+        bookEntity.setPersonEntity(personEntity);
 
-        return  personRepository.save(personEntity);
+        return bookRepository.save(bookEntity);
     }
 
 }

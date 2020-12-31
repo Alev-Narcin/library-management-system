@@ -3,7 +3,9 @@ package com.alevnarcin.librarymanagementsystem.entity;
 
 import com.alevnarcin.librarymanagementsystem.entity.base.BaseEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.PersonType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 @Getter
 @Setter
-@Entity(name = "Kisi")
+@Entity(name = "Person")
 @Table(name = "kisi")
 public class PersonEntity extends BaseEntity {
 
@@ -46,6 +48,7 @@ public class PersonEntity extends BaseEntity {
 
     // RELATIONS
     @OneToMany(mappedBy = "personEntity")
+    @JsonIgnoreProperties(value = "personEntity")
     private Set<BookEntity> bookEntities = new HashSet<>();
 
     public Set<BookEntity> getBookEntities() {

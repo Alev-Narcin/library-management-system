@@ -71,11 +71,11 @@ public class BookService {
     }
 
     public PersonEntity getPerson(Integer bookId, Integer personId) {
-        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
-        //Set<BookEntity> bookEntities = personEntity.getBookEntities();
+        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        bookEntity.setPersonEntity(personEntity);
 
-        return null;
+        return personRepository.save(personEntity);
     }
 
 }

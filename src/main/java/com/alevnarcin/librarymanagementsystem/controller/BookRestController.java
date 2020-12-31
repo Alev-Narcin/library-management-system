@@ -1,6 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
+import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.service.BookService;
 import org.springframework.http.HttpStatus;

@@ -14,7 +14,6 @@ import javax.validation.Valid;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/persons", produces = {"application/json"})
 public class PersonRestController {
@@ -58,7 +57,7 @@ public class PersonRestController {
     }
 
     @GetMapping("/get-book/{personId}/{bookId}")
-    public ResponseEntity<PersonEntity> getBook(@PathVariable("personId") Integer personId, @PathVariable("bookId") Integer bookId) {
+    public ResponseEntity<BookEntity> getBook(@PathVariable("personId") Integer personId, @PathVariable("bookId") Integer bookId) {
         return  ResponseEntity.ok(personService.getBook(personId,bookId));
     }
 }

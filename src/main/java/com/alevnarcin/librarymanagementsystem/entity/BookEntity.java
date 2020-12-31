@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 
-@Entity(name = "Kitap")         // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
+@Entity(name = "Book")         // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
 @Table(name = "kitap")          // tablo adı
 @Getter
 @Setter
@@ -22,7 +22,7 @@ import java.util.*;
 public class BookEntity extends BaseEntity {
 
 
-    @Column(name = "seri_no", nullable = false, unique = true)
+    @Column(name = "ISBN", nullable = false, unique = true)
     private String serial_number;
 
     // kolon tanımları, columnDefinition'ı kullanma
@@ -56,7 +56,8 @@ public class BookEntity extends BaseEntity {
     }
 
     @ManyToOne
-    //@JsonIgnoreProperties(value = "personEntities", allowSetters = true)
+    @JoinColumn(name ="kisi_id")
+    @JsonIgnoreProperties(value = "bookEntities")
     private PersonEntity personEntity;
 
 
