@@ -3,8 +3,10 @@ package com.alevnarcin.librarymanagementsystem.service;
 import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.converter.PersonConverter;
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
+import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
+import com.alevnarcin.librarymanagementsystem.repository.AuthorRepository;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import com.alevnarcin.librarymanagementsystem.validation.BookValidation;
@@ -24,12 +26,14 @@ public class BookService {
     private PersonService personService;
     private final PersonConverter personConverter;
     private final PersonRepository personRepository;
+    private final AuthorRepository authorRepository;
 
-    public BookService(BookRepository bookRepository, BookConverter bookConverter, PersonConverter personConverter, ApplicationContext applicationContext, PersonRepository personRepository) {
+    public BookService(AuthorRepository authorRepository, BookRepository bookRepository, BookConverter bookConverter, PersonConverter personConverter, ApplicationContext applicationContext, PersonRepository personRepository) {
         this.bookRepository = bookRepository;
         this.bookConverter = bookConverter;
         this.personConverter = personConverter;
         this.personRepository = personRepository;
+        this.authorRepository = authorRepository;
 
         //BookRepository bean = applicationContext.getBean(BookRepository.class);
 
@@ -70,6 +74,7 @@ public class BookService {
         bookRepository.delete(bookEntity);
     }
 
+    //RELATİON -> bookEntity&personEntity
     public PersonEntity getPerson(Integer bookId, Integer personId) {
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
         PersonEntity personEntity = personRepository.findById(personId).orElse(null);
@@ -77,5 +82,15 @@ public class BookService {
 
         return personRepository.save(personEntity);
     }
+
+    //RELATİON -> bookEntity&authorEntity
+    public AuthorEntity getAuthor(Integer authorId, Integer bookId) {
+        AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        authorEntity.setBookEntities((Set<BookEntity>) bookEntity);
+
+        return authorRepository.save(authorEntity);
+    }
+
 
 }

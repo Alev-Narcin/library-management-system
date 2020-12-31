@@ -6,17 +6,17 @@
 //@Entity
 //public class Borrowed {
 //
-//       // @Relation
-//        PersonEntity personEntity;
-//
-//        //@Relation
-//        BookEntity bookEntity;
-//
-//
-//        LocalDate borrowanceDate;
-//
-//        LocalDate returnDate;
-//
-//
-//    }
+////       // @Relation
+////        PersonEntity personEntity;
+////
+////        //@Relation
+////        BookEntity bookEntity;
+////
+////
+////        LocalDate borrowanceDate;
+////
+////        LocalDate returnDate;
+////
+////
+////    }
 //}

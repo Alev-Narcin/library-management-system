@@ -1,6 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
+import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.service.BookService;
@@ -56,8 +57,17 @@ public class BookRestController {
 
     }
 
+    //personEntity&bookEntity
     @GetMapping("/get-person/{bookId}/{personId}")
     public ResponseEntity<PersonEntity> getPerson(@PathVariable("bookId") Integer bookId, @PathVariable("personId") Integer personId) {
         return ResponseEntity.ok(bookService.getPerson(bookId,personId));
     }
+
+    //bookEntity&authorEntity
+    @GetMapping("/get-author/{bookId}/{authorId}")
+    public ResponseEntity<AuthorEntity> getAuthor(@PathVariable("bookId") Integer bookId, @PathVariable("authorId") Integer authorId) {
+        return ResponseEntity.ok(bookService.getAuthor(bookId, authorId));
+    }
+
+
 }

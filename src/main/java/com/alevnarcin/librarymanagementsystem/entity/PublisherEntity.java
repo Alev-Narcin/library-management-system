@@ -8,7 +8,7 @@
 //@Entity(name = "Publisher")
 //public class PublisherEntity {
 //
-//    OneToMany()
-//    Set<BookEntity> books;
+////    OneToMany()
+////    Set<BookEntity> books;
 //
 //}
