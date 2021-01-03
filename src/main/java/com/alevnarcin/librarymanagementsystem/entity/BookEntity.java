@@ -84,6 +84,9 @@ public class BookEntity extends BaseEntity {
         this.authorEntities = authorEntities;
     }
 
+
+
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL , mappedBy = "bookEntity")
     @JoinColumn(name = "borrowed_id")
     @JsonIgnoreProperties(value = "bookEntity")
@@ -95,5 +98,22 @@ public class BookEntity extends BaseEntity {
 
     public void setBorrowedEntity(BorrowedEntity borrowedEntity) {
         this.borrowedEntity = borrowedEntity;
+    }
+
+
+    //Relation publisherEntity&bookEntity
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "book_publisher",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "publisher_id"))
+    private Set<PublisherEntity> publisherEntities = new HashSet<>();
+
+
+    public Set<PublisherEntity> getPublisherEntities() {
+        return publisherEntities;
+    }
+
+    public void setPublisherEntities(Set<PublisherEntity> publisherEntities) {
+        this.publisherEntities = publisherEntities;
     }
 }
