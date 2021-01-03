@@ -3,6 +3,7 @@ package com.alevnarcin.librarymanagementsystem.controller;
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
+import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.service.BookService;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class BookRestController {
     // yani method çağrılırken parametrenin değeri adres satırında karşılık gelen yerdeki değerdir.
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<BookDto> get(@PathVariable("bookId") int id) {
+    public ResponseEntity<BookDto> get(@PathVariable("bookId") Integer id) {
         try {
             BookDto bookDto = bookService.find(id);
             return new ResponseEntity<>(bookDto, HttpStatus.OK);
@@ -57,11 +58,11 @@ public class BookRestController {
 
     }
 
-    //personEntity&bookEntity
+    /*//personEntity&bookEntity
     @GetMapping("/get-person/{bookId}/{personId}")
     public ResponseEntity<PersonEntity> getPerson(@PathVariable("bookId") Integer bookId, @PathVariable("personId") Integer personId) {
         return ResponseEntity.ok(bookService.getPerson(bookId,personId));
-    }
+    }*/
 
     //bookEntity&authorEntity
     @GetMapping("/get-author/{bookId}/{authorId}")
@@ -69,5 +70,9 @@ public class BookRestController {
         return ResponseEntity.ok(bookService.getAuthor(bookId, authorId));
     }
 
+    @GetMapping("/get-borrowed/{bookId}/{borrowedId}")
+    public ResponseEntity<BorrowedEntity> getBorrow(@PathVariable("bookId") Integer bookId, @PathVariable("borrowedId") Integer borrowedId) {
+        return ResponseEntity.ok(bookService.getBorrow(bookId,borrowedId));
+    }
 
 }

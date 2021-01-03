@@ -1,5 +1,6 @@
 package com.alevnarcin.librarymanagementsystem.dto;
 
+import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.BookType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class BookDto {
 
     private Integer id;
     private String name;
-    private String authorName;
+    private AuthorEntity authorName;
     private String publisher;
     private BookType type;
     private Long stock;

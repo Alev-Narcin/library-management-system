@@ -3,18 +3,13 @@ package com.alevnarcin.librarymanagementsystem.entity;
 
 import com.alevnarcin.librarymanagementsystem.entity.base.BaseEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.PersonType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.*;
+
 @Getter
 @Setter
 @Entity(name = "Person")
@@ -30,7 +25,7 @@ public class PersonEntity extends BaseEntity {
     @Column(name = "Telefon_No", length =14, nullable = false)
     private String phoneNumber;
 
-    @Column(name = "Email", nullable = false)
+    @Column(name = "Email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "cinsiyet", nullable = false, updatable = false)
@@ -47,18 +42,16 @@ public class PersonEntity extends BaseEntity {
     }
 
     // RELATIONS
-    @OneToMany(mappedBy = "personEntity")
+    @OneToOne(mappedBy = "personEntity")
     @JsonIgnoreProperties(value = "personEntity")
-    private Set<BookEntity> bookEntities = new HashSet<>();
+    @JoinColumn(name = "borrowed_id")
+    private BorrowedEntity borrowedEntity;
 
-    public Set<BookEntity> getBookEntities() {
-
-        return bookEntities;
+    public BorrowedEntity getBorrowedEntity() {
+        return borrowedEntity;
     }
 
-    public void setBookEntities(Set<BookEntity> bookEntities) {
-
-        this.bookEntities = bookEntities;
-
+    public void setBorrowedEntity(BorrowedEntity borrowedEntity) {
+        this.borrowedEntity = borrowedEntity;
     }
 }

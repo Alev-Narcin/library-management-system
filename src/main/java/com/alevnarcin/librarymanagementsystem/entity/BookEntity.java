@@ -4,12 +4,8 @@ import com.alevnarcin.librarymanagementsystem.entity.base.BaseEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.BookType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,23 +16,19 @@ import java.util.*;
 @Table(name = "kitap")          // tablo adı
 @Getter
 @Setter
-
-@EqualsAndHashCode(exclude = "authorEntities")
-
+//@EqualsAndHashCode(exclude = "authorEntities")
 // Lombok annotation'ı getter ve setterları yaratıyor, required args constructor, equals and hashCode methodlarını otomatik yaratıyor.
 public class BookEntity extends BaseEntity {
 
-
     @Column(name = "ISBN", nullable = false, unique = true)
-    @Id
     private String serial_number;
 
     // kolon tanımları, columnDefinition'ı kullanma
     @Column(name = "isim", nullable = false, length = 64)
     private String name;
 
-    @Column(name = "yazar", nullable = false, length = 64)
-    private String authorName;   //field ın tipini değiştir.
+    /*@Column(name = "yazar", nullable = false, length = 64)
+    private AuthorEntity authorName;*/
 
     @Column(name = "yayimci", nullable = false, length = 64)
     private String publisher; // fieldın tipini değiştir.
@@ -62,7 +54,8 @@ public class BookEntity extends BaseEntity {
         super();
     }
 
-    //Relation personEntity&bookEntity
+
+    /*//Relation personEntity&bookEntity
     @ManyToOne
     @JoinColumn(name ="kisi_id")
     @JsonIgnoreProperties(value = "bookEntities")
@@ -76,22 +69,31 @@ public class BookEntity extends BaseEntity {
     public void setPersonEntity(PersonEntity personEntity) {
 
         this.personEntity = personEntity;
-    }
+    }*/
 
 
     //Relation authorEntity&bookEntity
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<AuthorEntity> authorEntities = new HashSet<>();
 
 
+    public void setAuthorEntities(Set<AuthorEntity> authorEntities) {
+        this.authorEntities = authorEntities;
+    }
 
-    public BookEntity(String name, AuthorEntity... authorEntities) {
-        this.name = name;
-        this.authorEntities = Stream.of(authorEntities).collect(Collectors.toSet());
-        this.authorEntities.forEach(x ->x.getBookEntities().add(this));
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL , mappedBy = "bookEntity")
+    @JoinColumn(name = "borrowed_id")
+    @JsonIgnoreProperties(value = "bookEntity")
+    private BorrowedEntity borrowedEntity;
 
+    public BorrowedEntity getBorrowedEntity() {
+        return borrowedEntity;
+    }
+
+    public void setBorrowedEntity(BorrowedEntity borrowedEntity) {
+        this.borrowedEntity = borrowedEntity;
     }
 }

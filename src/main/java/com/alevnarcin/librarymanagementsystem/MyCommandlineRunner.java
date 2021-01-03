@@ -1,3 +1,4 @@
+/*
 package com.alevnarcin.librarymanagementsystem;
 
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
@@ -62,3 +63,4 @@ public class MyCommandlineRunner implements CommandLineRunner {
         personRepo.save(entity);
     }
 }
+*/

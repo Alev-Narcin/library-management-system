@@ -3,6 +3,7 @@ package com.alevnarcin.librarymanagementsystem.controller;
 
 import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
+import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.service.PersonService;
 import jdk.nashorn.internal.objects.annotations.Constructor;
@@ -56,8 +57,16 @@ public class PersonRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/get-book/{personId}/{bookId}")
+    /*@GetMapping("/get-book/{personId}/{bookId}")
     public ResponseEntity<BookEntity> getBook(@PathVariable("personId") Integer personId, @PathVariable("bookId") Integer bookId) {
         return  ResponseEntity.ok(personService.getBook(personId,bookId));
+    }*/
+
+
+    @GetMapping("/get-borrowed/{personId}/{borrowedId}")
+    public ResponseEntity<BorrowedEntity> getBorrow(@PathVariable("personId") Integer personId, @PathVariable("borrowedId") Integer borrowedId) {
+        return ResponseEntity.ok(personService.getBorrow(personId,borrowedId));
     }
+
+
 }

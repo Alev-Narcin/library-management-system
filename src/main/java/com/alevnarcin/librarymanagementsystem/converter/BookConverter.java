@@ -14,7 +14,7 @@ public class BookConverter {
         BookDto bookDto = new BookDto();
         bookDto.setId(bookEntity.getId());
         bookDto.setName(bookEntity.getName());
-        bookDto.setAuthorName(bookEntity.getAuthorName());
+        //bookDto.setAuthorName(bookEntity.getAuthorName());
         bookDto.setPublisher(bookEntity.getPublisher());
         bookDto.setType(bookEntity.getType());
         bookDto.setStock(bookEntity.getStock());
@@ -29,7 +29,7 @@ public class BookConverter {
         BookEntity bookEntity = new BookEntity();
         bookEntity.setId(bookDto.getId());
         bookEntity.setName(bookDto.getName());
-        bookEntity.setAuthorName(bookDto.getAuthorName());
+        //bookEntity.setAuthorName(bookDto.getAuthorName());
         bookEntity.setPublisher(bookDto.getPublisher());
         bookEntity.setType(bookDto.getType());
         bookEntity.setStock(bookDto.getStock());

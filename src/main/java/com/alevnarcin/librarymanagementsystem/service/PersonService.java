@@ -6,8 +6,10 @@ import com.alevnarcin.librarymanagementsystem.converter.PersonConverter;
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
+import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
+import com.alevnarcin.librarymanagementsystem.repository.BorrowedRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +28,15 @@ public class PersonService {
     private final PersonConverter personConverter;
     private final BookRepository bookRepository;
     private final BookConverter bookConverter;
+    private final BorrowedRepository borrowedRepository;
 
     @Autowired
-    public PersonService(PersonRepository personRepository, PersonConverter personConverter, BookRepository bookRepository, BookConverter bookConverter) {
+    public PersonService(BorrowedRepository borrowedRepository,PersonRepository personRepository, PersonConverter personConverter, BookRepository bookRepository, BookConverter bookConverter) {
         this.personRepository = personRepository;
         this.personConverter = personConverter;
         this.bookRepository = bookRepository;
         this.bookConverter = bookConverter;
+        this.borrowedRepository = borrowedRepository;
     }
 
     public PersonDto find(int id) {
@@ -67,12 +71,20 @@ public class PersonService {
     }
 
 
-    public BookEntity getBook(Integer personId, Integer bookId) {
+   /* public BookEntity getBook(Integer personId, Integer bookId) {
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
         PersonEntity personEntity = personRepository.findById(personId).orElse(null);
         bookEntity.setPersonEntity(personEntity);
 
         return bookRepository.save(bookEntity);
+    }*/
+
+    public BorrowedEntity getBorrow(Integer borrowedId, Integer personId) {
+        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElse(null);
+        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        borrowedEntity.setPersonEntity(personEntity);
+
+        return borrowedRepository.save(borrowedEntity);
     }
 
 }
