@@ -48,8 +48,8 @@ public class BorrowedService {
     public BorrowedDto update(BorrowedDto borrowedDto, Integer borrowedId) {
         BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElseThrow(NoSuchElementException::new);
 
-        borrowedEntity.setBorrowanceDate(borrowedDto.getBorrowanceDate());
-        borrowedEntity.setReturnDate(borrowedDto.getReturnDate());
+        borrowedEntity.setBorrowStartDate(borrowedDto.getBorrowanceDate());
+        borrowedEntity.setBorrowEndDate(borrowedDto.getReturnDate());
         borrowedEntity.setId(borrowedDto.getId());
 
         return borrowedConverter.borrowedEntityToBorrowedDto(borrowedRepository.save(borrowedEntity));
@@ -64,8 +64,8 @@ public class BorrowedService {
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
         BorrowedEntity borrowedEntity = new BorrowedEntity();
         borrowedEntity.setBookEntity(bookEntity);
-        borrowedEntity.setBorrowanceDate(LocalDate.now());
-        borrowedEntity.setReturnDate(LocalDate.now());
+        borrowedEntity.setBorrowStartDate(LocalDate.now());
+        borrowedEntity.setBorrowEndDate(LocalDate.now().plusDays(30));
 
         return bookRepository.save(bookEntity);
     }
@@ -77,10 +77,9 @@ public class BorrowedService {
 
         borrowedEntity.setPersonEntity(personEntity);
         borrowedEntity.setBookEntity(bookEntity);
-        borrowedEntity.setReturnDate(LocalDate.now());
-        borrowedEntity.setBorrowanceDate(LocalDate.now());
+        borrowedEntity.setBorrowStartDate(LocalDate.now());
+        borrowedEntity.setBorrowEndDate(LocalDate.now().plusDays(30));
 
-        //bookEntity.getBorrowedEntities().add(borrowedEntity);
         personEntity.getBorrowedEntities().add(borrowedEntity);
 
         return personRepository.save(personEntity);

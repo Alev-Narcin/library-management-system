@@ -10,8 +10,8 @@ public class BorrowedConverter {
     public BorrowedDto borrowedEntityToBorrowedDto(BorrowedEntity borrowedEntity) {
         BorrowedDto borrowedDto = new BorrowedDto();
         borrowedDto.setId(borrowedEntity.getId());
-        borrowedDto.setBorrowanceDate(borrowedEntity.getBorrowanceDate());
-        borrowedDto.setReturnDate(borrowedEntity.getReturnDate());
+        borrowedDto.setBorrowanceDate(borrowedEntity.getBorrowStartDate());
+        borrowedDto.setReturnDate(borrowedEntity.getBorrowReturnDate());
 
         return borrowedDto;
     }
@@ -19,8 +19,8 @@ public class BorrowedConverter {
     public BorrowedEntity borrowedDtoToBorrowedEntity(BorrowedDto borrowedDto) {
         BorrowedEntity borrowedEntity = new BorrowedEntity();
         borrowedEntity.setId(borrowedDto.getId());
-        borrowedEntity.setBorrowanceDate(borrowedDto.getBorrowanceDate());
-        borrowedEntity.setReturnDate(borrowedDto.getReturnDate());
+        borrowedEntity.setBorrowStartDate(borrowedDto.getBorrowanceDate());
+        borrowedEntity.setBorrowReturnDate(borrowedDto.getReturnDate());
 
         return borrowedEntity;
 

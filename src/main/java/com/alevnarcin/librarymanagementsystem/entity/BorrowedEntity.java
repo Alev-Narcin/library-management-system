@@ -22,13 +22,13 @@ public class BorrowedEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private BookEntity bookEntity;
 
+    @Column(name = "borrow_start_date", nullable = false)
+    private LocalDate borrowStartDate;
 
-    @Column(name = "borrowance_date", nullable = false)
-    private LocalDate borrowanceDate;
+    @Column(name = "return_end_date", nullable = false)
+    private LocalDate borrowEndDate;
 
-    @Column(name = "return_date", nullable = false)
-    private LocalDate returnDate;
-
-
+    @Column(name = "borrow_return_date", nullable = false)
+    private LocalDate borrowReturnDate;
 }
 
