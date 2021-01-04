@@ -15,7 +15,7 @@ public class BorrowedEntity extends BaseEntity {
 
 
     // @Relation
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private PersonEntity personEntity;
 
     //@Relation

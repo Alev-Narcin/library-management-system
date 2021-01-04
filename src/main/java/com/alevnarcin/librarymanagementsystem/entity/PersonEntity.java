@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -43,16 +45,9 @@ public class PersonEntity extends BaseEntity {
     }
 
     // RELATIONS
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "personEntity")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "personEntity")
     @JsonIgnoreProperties(value = "personEntity")
-    @JoinColumn(name = "borrowed_id")
-    private BorrowedEntity borrowedEntity;
+    private Set<BorrowedEntity> borrowedEntities = new HashSet<>();
 
-    public BorrowedEntity getBorrowedEntity() {
-        return borrowedEntity;
-    }
 
-    public void setBorrowedEntity(BorrowedEntity borrowedEntity) {
-        this.borrowedEntity = borrowedEntity;
-    }
 }

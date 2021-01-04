@@ -80,8 +80,8 @@ public class BorrowedService {
         borrowedEntity.setReturnDate(LocalDate.now());
         borrowedEntity.setBorrowanceDate(LocalDate.now());
 
-        bookEntity.getBorrowedEntities().add(borrowedEntity);
-        personEntity.setBorrowedEntity(borrowedEntity);
+        //bookEntity.getBorrowedEntities().add(borrowedEntity);
+        personEntity.getBorrowedEntities().add(borrowedEntity);
 
         return personRepository.save(personEntity);
     }
