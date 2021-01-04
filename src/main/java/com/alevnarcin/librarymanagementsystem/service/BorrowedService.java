@@ -11,6 +11,9 @@ import com.alevnarcin.librarymanagementsystem.repository.BorrowedRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.awt.print.Book;
+import java.time.LocalDate;
 import java.util.NoSuchElementException;
 
 @Service
@@ -23,7 +26,7 @@ public class BorrowedService {
     private BookService bookService;
     private final PersonRepository personRepository;
 
-    public BorrowedService(PersonRepository personRepository,BorrowedRepository borrowedRepository, BorrowedConverter borrowedConverter, BookRepository bookRepository, BookConverter bookConverter) {
+    public BorrowedService(PersonRepository personRepository, BorrowedRepository borrowedRepository, BorrowedConverter borrowedConverter, BookRepository bookRepository, BookConverter bookConverter) {
         this.borrowedRepository = borrowedRepository;
         this.borrowedConverter = borrowedConverter;
         this.bookRepository = bookRepository;
@@ -31,7 +34,7 @@ public class BorrowedService {
         this.personRepository = personRepository;
     }
 
-    public BorrowedDto find(Integer id){
+    public BorrowedDto find(Integer id) {
         BorrowedEntity borrowedEntity = borrowedRepository.findById(id).orElseThrow(NoSuchElementException::new);
         return borrowedConverter.borrowedEntityToBorrowedDto(borrowedEntity);
     }
@@ -58,20 +61,29 @@ public class BorrowedService {
     }
 
     public BookEntity getBook(Integer borrowedId, Integer bookId) {
-        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElse(null);
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
-        bookEntity.setBorrowedEntity(borrowedEntity);
+        BorrowedEntity borrowedEntity = new BorrowedEntity();
+        borrowedEntity.setBookEntity(bookEntity);
+        borrowedEntity.setBorrowanceDate(LocalDate.now());
+        borrowedEntity.setReturnDate(LocalDate.now());
 
         return bookRepository.save(bookEntity);
     }
 
-    public PersonEntity getPerson(Integer borrowedId, Integer personId) {
-        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElse(null);
-        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+    public PersonEntity getBorrow(Integer bookId, Integer personId) {
+        PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
+        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        BorrowedEntity borrowedEntity = new BorrowedEntity();
+
+        borrowedEntity.setPersonEntity(personEntity);
+        borrowedEntity.setBookEntity(bookEntity);
+        borrowedEntity.setReturnDate(LocalDate.now());
+        borrowedEntity.setBorrowanceDate(LocalDate.now());
+
+        bookEntity.getBorrowedEntities().add(borrowedEntity);
         personEntity.setBorrowedEntity(borrowedEntity);
 
         return personRepository.save(personEntity);
-
     }
 
 }

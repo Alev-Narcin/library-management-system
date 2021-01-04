@@ -1,10 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
-import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
-import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
-import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
-import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
+import com.alevnarcin.librarymanagementsystem.entity.*;
 import com.alevnarcin.librarymanagementsystem.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +36,7 @@ public class BookRestController {
         }
     }
 
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/new", consumes={"application/json"})
     public ResponseEntity<BookDto>create(@RequestBody BookDto bookDto) {
@@ -46,10 +44,12 @@ public class BookRestController {
         return new ResponseEntity<>(bookService.create(bookDto), HttpStatus.CREATED);
     }
 
+
     @PutMapping("/{bookId}")
     public ResponseEntity<BookDto> update(@RequestBody BookDto bookDto, @PathVariable("bookId") Integer bookId) {
         return new ResponseEntity<>(bookService.update(bookDto, bookId), HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{bookId}")
     public ResponseEntity<Void> delete(@PathVariable("bookId") Integer bookId) {
@@ -58,17 +58,19 @@ public class BookRestController {
 
     }
 
-    /*//personEntity&bookEntity
-    @GetMapping("/get-person/{bookId}/{personId}")
-    public ResponseEntity<PersonEntity> getPerson(@PathVariable("bookId") Integer bookId, @PathVariable("personId") Integer personId) {
-        return ResponseEntity.ok(bookService.getPerson(bookId,personId));
-    }*/
 
     //bookEntity&authorEntity
     @GetMapping("/get-author/{bookId}/{authorId}")
     public ResponseEntity<AuthorEntity> getAuthor(@PathVariable("bookId") Integer bookId, @PathVariable("authorId") Integer authorId) {
         return ResponseEntity.ok(bookService.getAuthor(bookId, authorId));
     }
+
+    //bookEntity&publisherEntity
+    @GetMapping("/get-publisher/{bookId}/{publisherId}")
+    public ResponseEntity<PublisherEntity> getPublisher(@PathVariable("bookId") Integer bookId, @PathVariable("publisherId") Integer publisherId) {
+        return ResponseEntity.ok(bookService.getPublisher(bookId, publisherId));
+    }
+
 
     @GetMapping("/get-borrowed/{bookId}/{borrowedId}")
     public ResponseEntity<BorrowedEntity> getBorrow(@PathVariable("bookId") Integer bookId, @PathVariable("borrowedId") Integer borrowedId) {

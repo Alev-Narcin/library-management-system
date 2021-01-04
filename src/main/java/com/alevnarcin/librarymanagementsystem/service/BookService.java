@@ -4,14 +4,8 @@ import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.converter.PersonConverter;
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.dto.BorrowedDto;
-import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
-import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
-import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
-import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
-import com.alevnarcin.librarymanagementsystem.repository.AuthorRepository;
-import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
-import com.alevnarcin.librarymanagementsystem.repository.BorrowedRepository;
-import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
+import com.alevnarcin.librarymanagementsystem.entity.*;
+import com.alevnarcin.librarymanagementsystem.repository.*;
 import com.alevnarcin.librarymanagementsystem.validation.BookValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -31,16 +25,16 @@ public class BookService {
     private final PersonRepository personRepository;
     private final AuthorRepository authorRepository;
     private final BorrowedRepository borrowedRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BookService(BorrowedRepository borrowedRepository,AuthorRepository authorRepository, BookRepository bookRepository, BookConverter bookConverter, PersonConverter personConverter, ApplicationContext applicationContext, PersonRepository personRepository) {
+    public BookService(PublisherRepository publisherRepository,BorrowedRepository borrowedRepository,AuthorRepository authorRepository, BookRepository bookRepository, BookConverter bookConverter, PersonConverter personConverter, ApplicationContext applicationContext, PersonRepository personRepository) {
         this.bookRepository = bookRepository;
         this.bookConverter = bookConverter;
         this.personConverter = personConverter;
         this.personRepository = personRepository;
         this.authorRepository = authorRepository;
         this.borrowedRepository = borrowedRepository;
-
-        //BookRepository bean = applicationContext.getBean(BookRepository.class);
+        this.publisherRepository = publisherRepository;
 
     }
 
@@ -52,6 +46,7 @@ public class BookService {
 
     public BookDto find(int id) {
         BookEntity entity = bookRepository.findById(id).orElseThrow(NoSuchElementException::new);
+
         return bookConverter.bookEntityToBookDto(entity);
     }
 
@@ -66,8 +61,6 @@ public class BookService {
         BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
 
         bookEntity.setName(bookDto.getName());
-        bookEntity.setPublisher(bookDto.getPublisher());
-        //bookEntity.setAuthorName(bookDto.getAuthorName());
         bookEntity.setSupplyType(bookDto.getSupplyType());
         bookEntity.setStock(bookDto.getStock());
 
@@ -79,27 +72,32 @@ public class BookService {
         bookRepository.delete(bookEntity);
     }
 
-    /*//RELATİON -> bookEntity&personEntity//
-    public PersonEntity getPerson(Integer bookId, Integer personId) {
-        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
-        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
-        bookEntity.setPersonEntity(personEntity);
-
-        return personRepository.save(personEntity);
-    }*/
 
     //RELATİON -> bookEntity&authorEntity
     public AuthorEntity getAuthor(Integer authorId, Integer bookId) {
-        AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
-        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
-        authorEntity.setBookEntities((Set<BookEntity>) bookEntity);
+        AuthorEntity authorEntity = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
+        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        authorEntity.getBookEntities().add(bookEntity);
+        bookEntity.getAuthorEntities().add(authorEntity);
 
         return authorRepository.save(authorEntity);
     }
 
+    //RELATİON -> bookEntity&publisherEntity
+    public PublisherEntity getPublisher(Integer publisherId, Integer bookId) {
+        PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElseThrow(NoSuchElementException::new);
+        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        publisherEntity.getBookEntities().add(bookEntity);
+        bookEntity.getPublisherEntities().add(publisherEntity);
+
+        return publisherRepository.save(publisherEntity);
+    }
+
+
+    //RELATION -> bookEntity&borrowedEntity
     public BorrowedEntity getBorrow(Integer borrowedId, Integer bookId) {
-        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElse(null);
-        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElseThrow(NoSuchElementException::new);
+        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
         borrowedEntity.setBookEntity(bookEntity);
 
         return borrowedRepository.save(borrowedEntity);

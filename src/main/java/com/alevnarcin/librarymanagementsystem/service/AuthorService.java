@@ -57,9 +57,10 @@ public class AuthorService {
 
 
     public BookEntity getBook(Integer authorId, Integer bookId) {
-        AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
-        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
-        bookEntity.setAuthorEntities((Set<AuthorEntity>) authorEntity);
+        AuthorEntity authorEntity = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
+        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        authorEntity.getBookEntities().add(bookEntity);
+        bookEntity.getAuthorEntities().add(authorEntity);
 
         return bookRepository.save(bookEntity);
 

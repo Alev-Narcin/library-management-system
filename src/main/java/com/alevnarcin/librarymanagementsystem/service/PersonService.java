@@ -71,17 +71,9 @@ public class PersonService {
     }
 
 
-   /* public BookEntity getBook(Integer personId, Integer bookId) {
-        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
-        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
-        bookEntity.setPersonEntity(personEntity);
-
-        return bookRepository.save(bookEntity);
-    }*/
-
     public BorrowedEntity getBorrow(Integer borrowedId, Integer personId) {
-        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElse(null);
-        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElseThrow(NoSuchElementException::new);
+        PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
         borrowedEntity.setPersonEntity(personEntity);
 
         return borrowedRepository.save(borrowedEntity);

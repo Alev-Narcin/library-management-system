@@ -62,9 +62,9 @@ public class BorrowedRestController {
     }
 
     //personEntity&borrowedEntity
-    @GetMapping("/get-person/{borrowedId}/{personId}")
-    public ResponseEntity<PersonEntity> getPerson(@PathVariable("borrowedId") Integer borrowedId, @PathVariable("personId") Integer personId) {
-        return ResponseEntity.ok(borrowedService.getPerson(borrowedId, personId));
+    @GetMapping("/get-borrow/{personId}/{bookId}")
+    public ResponseEntity<PersonEntity> getBorrow(@PathVariable("personId") Integer personId , @PathVariable("bookId") Integer bookId) {
+        return ResponseEntity.ok(borrowedService.getBorrow(personId, bookId));
     }
 
 }

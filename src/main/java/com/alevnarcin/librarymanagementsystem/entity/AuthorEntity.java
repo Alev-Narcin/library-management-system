@@ -11,12 +11,11 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Data
-@Entity(name = "Author")
-@Table(name ="yazar")
+@Entity(name = "AUTHOR")
+@Table(name ="t_author")
 public class AuthorEntity extends BaseEntity {
 
-    @Column(name = "ad_soyad", nullable = false)
+    @Column(name = "name_surname", nullable = false)
     private String name;
 
 

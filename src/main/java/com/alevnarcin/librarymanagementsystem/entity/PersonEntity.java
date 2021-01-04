@@ -12,29 +12,30 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity(name = "Person")
-@Table(name = "kisi")
+@Entity(name = "PERSON")
+@Table(name = "t_person")
 public class PersonEntity extends BaseEntity {
 
     @Column(name = "TC", length = 11, nullable = false)
     private String TC;
 
-    @Column(name = "ad_Soyad", length = 25, nullable = false)
+    @Column(name = "name_surname", length = 25, nullable = false)
     private String name;
 
-    @Column(name = "Telefon_No", length =14, nullable = false)
+    @Column(name = "phone_number", length =14, nullable = false)
     private String phoneNumber;
 
-    @Column(name = "Email", nullable = false, unique = true)
+    @Column(name = "Email", nullable = false)
     private String email;
 
-    @Column(name = "cinsiyet", nullable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", nullable = false)
     private PersonType type;
 
-    @Column(name = "uyelik_tarihi", nullable = false, updatable = false )
+    @Column(name = "member_ship_date", nullable = false, updatable = false )
     private LocalDateTime memberShipDate;
 
-    @Column(name = "adres", nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
 
     public PersonEntity(){
@@ -42,7 +43,7 @@ public class PersonEntity extends BaseEntity {
     }
 
     // RELATIONS
-    @OneToOne(mappedBy = "personEntity")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "personEntity")
     @JsonIgnoreProperties(value = "personEntity")
     @JoinColumn(name = "borrowed_id")
     private BorrowedEntity borrowedEntity;

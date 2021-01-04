@@ -55,14 +55,13 @@ public class PublisherService {
     }
 
     public BookEntity getBook(Integer publisherId, Integer bookId) {
-        PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElse(null);
-        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
-        bookEntity.setPublisherEntities((Set<PublisherEntity>) publisherEntity);
+        PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElseThrow(NoSuchElementException::new);
+        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        publisherEntity.getBookEntities().add(bookEntity);
+        bookEntity.getPublisherEntities().add(publisherEntity);
 
         return bookRepository.save(bookEntity);
 
     }
-
-
 
 }

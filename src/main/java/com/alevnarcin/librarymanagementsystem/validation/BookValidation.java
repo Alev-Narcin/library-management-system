@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 public class BookValidation {
 
     public void validateBook(BookDto bookDto) {
-        if (bookDto.getAuthorName() == null || bookDto.getAuthorName().equals("")) {
+        if (bookDto.getAuthorNames() == null || bookDto.getAuthorNames().equals("")) {
             throw new NullPointerException("Author can not be null");
         }
     }

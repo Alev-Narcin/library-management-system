@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class BookDto {
 
     private Integer id;
     private String name;
-    private AuthorEntity authorName;
+    private Set<AuthorEntity> authorNames = new HashSet<>();
     private String publisher;
     private BookType type;
     private Long stock;

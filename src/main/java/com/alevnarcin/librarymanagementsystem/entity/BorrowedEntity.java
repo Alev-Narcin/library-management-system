@@ -9,8 +9,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@Table(name = "emanet")
-@Entity(name = "Borrowed")
+@Table(name = "t_borrowed")
+@Entity(name = "BORROWED")
 public class BorrowedEntity extends BaseEntity {
 
 
@@ -19,14 +19,14 @@ public class BorrowedEntity extends BaseEntity {
     private PersonEntity personEntity;
 
     //@Relation
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private BookEntity bookEntity;
 
 
-    @Column(name = "alis_tarihi", nullable = false)
+    @Column(name = "borrowance_date", nullable = false)
     private LocalDate borrowanceDate;
 
-    @Column(name = "teslim_tarihi", nullable = false)
+    @Column(name = "return_date", nullable = false)
     private LocalDate returnDate;
 
 

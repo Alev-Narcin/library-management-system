@@ -11,9 +11,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Data
-@Entity(name = "Book")         // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
-@Table(name = "kitap")          // tablo adı
+@Entity(name = "BOOK")         // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
+@Table(name = "t_book")          // tablo adı
 @Getter
 @Setter
 //@EqualsAndHashCode(exclude = "authorEntities")
@@ -24,28 +23,22 @@ public class BookEntity extends BaseEntity {
     private String serial_number;
 
     // kolon tanımları, columnDefinition'ı kullanma
-    @Column(name = "isim", nullable = false, length = 64)
+    @Column(name = "name", nullable = false, length = 64)
     private String name;
-
-    /*@Column(name = "yazar", nullable = false, length = 64)
-    private AuthorEntity authorName;*/
-
-    @Column(name = "yayimci", nullable = false, length = 64)
-    private String publisher; // fieldın tipini değiştir.
 
     //ENUM'lar 'type' görevi görür. String yada ORDINAL olabilir.
     @Enumerated(EnumType.STRING)
     //Aşk,macera,roman,hikaye,polisiye vb.
-    @Column(name = "tur", updatable = false)
+    @Column(name = "type", updatable = false)
     private BookType type;
 
-    @Column(name = "stok_adedi")
+    @Column(name = "stock")
     private Long stock;
     //bağış,satın alma gibi
-    @Column(name = "temin_turu", length = 64)
+    @Column(name = "supply_type", length = 64)
     private String supplyType;
 
-    @Column(name = "temin_gunu", nullable = false, updatable = false)
+    @Column(name = "supply_date", nullable = false, updatable = false)
     private LocalDateTime supplyDate;
 
 
@@ -54,56 +47,22 @@ public class BookEntity extends BaseEntity {
         super();
     }
 
-
-    /*//Relation personEntity&bookEntity
-    @ManyToOne
-    @JoinColumn(name ="kisi_id")
-    @JsonIgnoreProperties(value = "bookEntities")
-    private PersonEntity personEntity;
-
-    public PersonEntity getPersonEntity() {
-
-        return personEntity;
-    }
-
-    public void setPersonEntity(PersonEntity personEntity) {
-
-        this.personEntity = personEntity;
-    }*/
-
-
     //Relation authorEntity&bookEntity
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "book_author",
+    @JoinTable(name = "t_book_author",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<AuthorEntity> authorEntities = new HashSet<>();
 
 
-    public void setAuthorEntities(Set<AuthorEntity> authorEntities) {
-        this.authorEntities = authorEntities;
-    }
-
-
-
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL , mappedBy = "bookEntity")
-    @JoinColumn(name = "borrowed_id")
+    //Relation borrowedEntity&bookEntity
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL , mappedBy = "bookEntity")
     @JsonIgnoreProperties(value = "bookEntity")
-    private BorrowedEntity borrowedEntity;
-
-    public BorrowedEntity getBorrowedEntity() {
-        return borrowedEntity;
-    }
-
-    public void setBorrowedEntity(BorrowedEntity borrowedEntity) {
-        this.borrowedEntity = borrowedEntity;
-    }
-
+    private Set<BorrowedEntity> borrowedEntities = new HashSet<>();
 
     //Relation publisherEntity&bookEntity
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "book_publisher",
+    @JoinTable(name = "t_book_publisher",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "publisher_id"))
     private Set<PublisherEntity> publisherEntities = new HashSet<>();
@@ -113,7 +72,4 @@ public class BookEntity extends BaseEntity {
         return publisherEntities;
     }
 
-    public void setPublisherEntities(Set<PublisherEntity> publisherEntities) {
-        this.publisherEntities = publisherEntities;
-    }
 }

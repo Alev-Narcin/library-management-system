@@ -1,6 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.converter;
 
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
+import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.BookType;
 import org.springframework.stereotype.Component;
@@ -14,8 +15,7 @@ public class BookConverter {
         BookDto bookDto = new BookDto();
         bookDto.setId(bookEntity.getId());
         bookDto.setName(bookEntity.getName());
-        //bookDto.setAuthorName(bookEntity.getAuthorName());
-        bookDto.setPublisher(bookEntity.getPublisher());
+        bookDto.setAuthorNames(bookEntity.getAuthorEntities());
         bookDto.setType(bookEntity.getType());
         bookDto.setStock(bookEntity.getStock());
         bookDto.setSupplyType(bookEntity.getSupplyType());
@@ -29,8 +29,7 @@ public class BookConverter {
         BookEntity bookEntity = new BookEntity();
         bookEntity.setId(bookDto.getId());
         bookEntity.setName(bookDto.getName());
-        //bookEntity.setAuthorName(bookDto.getAuthorName());
-        bookEntity.setPublisher(bookDto.getPublisher());
+        bookEntity.setAuthorEntities(bookDto.getAuthorNames());
         bookEntity.setType(bookDto.getType());
         bookEntity.setStock(bookDto.getStock());
         bookEntity.setSupplyType(bookDto.getSupplyType());

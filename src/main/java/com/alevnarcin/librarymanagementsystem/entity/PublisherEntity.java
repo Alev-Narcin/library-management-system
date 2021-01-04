@@ -12,12 +12,11 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Data
-@Table(name = "yayinevi")
-@Entity(name = "Publisher")
+@Table(name = "t_publisher")
+@Entity(name = "PUBLISHER")
 public class PublisherEntity extends BaseEntity {
 
-    @Column(name = "isim")
+    @Column(name = "name")
     private String name;
 
     @ManyToMany(mappedBy = "publisherEntities")

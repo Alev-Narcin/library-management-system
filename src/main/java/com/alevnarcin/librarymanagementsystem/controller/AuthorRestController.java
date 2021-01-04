@@ -58,5 +58,4 @@ public class AuthorRestController {
         return ResponseEntity.ok(authorService.getBook(authorId, bookId));
     }
 
-
 }
