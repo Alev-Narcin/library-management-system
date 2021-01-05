@@ -7,6 +7,7 @@ import com.alevnarcin.librarymanagementsystem.dto.BorrowedDto;
 import com.alevnarcin.librarymanagementsystem.entity.*;
 import com.alevnarcin.librarymanagementsystem.repository.*;
 import com.alevnarcin.librarymanagementsystem.validation.BookValidation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -16,27 +17,16 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
 
     private final BookRepository bookRepository;
     private final BookConverter bookConverter;
     private PersonService personService;
-    private final PersonConverter personConverter;
-    private final PersonRepository personRepository;
     private final AuthorRepository authorRepository;
     private final BorrowedRepository borrowedRepository;
     private final PublisherRepository publisherRepository;
 
-    public BookService(PublisherRepository publisherRepository,BorrowedRepository borrowedRepository,AuthorRepository authorRepository, BookRepository bookRepository, BookConverter bookConverter, PersonConverter personConverter, ApplicationContext applicationContext, PersonRepository personRepository) {
-        this.bookRepository = bookRepository;
-        this.bookConverter = bookConverter;
-        this.personConverter = personConverter;
-        this.personRepository = personRepository;
-        this.authorRepository = authorRepository;
-        this.borrowedRepository = borrowedRepository;
-        this.publisherRepository = publisherRepository;
-
-    }
 
     @Autowired
     public BookService setPersonService(PersonService personService) {

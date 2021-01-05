@@ -7,6 +7,7 @@ import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.service.BorrowedService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +17,10 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/borrowed", produces = {"application/json"})
+@RequiredArgsConstructor
 public class BorrowedRestController {
 
-    private BorrowedService borrowedService;
-
-    public BorrowedRestController(BorrowedService service) {
-
-        this.borrowedService = Objects.requireNonNull(service);
-    }
+    private final BorrowedService borrowedService;
 
     @GetMapping("/{borrowedId}")
     public ResponseEntity<BorrowedDto> get(@PathVariable("borrowedId") Integer id) {
@@ -35,8 +32,6 @@ public class BorrowedRestController {
         }
     }
 
-
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/new", consumes={"application/json"})
     public ResponseEntity<BorrowedDto>create(@RequestBody BorrowedDto borrowedDto) {
 

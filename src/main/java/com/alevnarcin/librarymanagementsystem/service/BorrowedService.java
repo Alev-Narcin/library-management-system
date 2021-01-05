@@ -9,6 +9,7 @@ import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import com.alevnarcin.librarymanagementsystem.repository.BorrowedRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
@@ -17,22 +18,13 @@ import java.time.LocalDate;
 import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class BorrowedService {
 
     private final BorrowedRepository borrowedRepository;
     private final BorrowedConverter borrowedConverter;
     private final BookRepository bookRepository;
-    private final BookConverter bookConverter;
-    private BookService bookService;
     private final PersonRepository personRepository;
-
-    public BorrowedService(PersonRepository personRepository, BorrowedRepository borrowedRepository, BorrowedConverter borrowedConverter, BookRepository bookRepository, BookConverter bookConverter) {
-        this.borrowedRepository = borrowedRepository;
-        this.borrowedConverter = borrowedConverter;
-        this.bookRepository = bookRepository;
-        this.bookConverter = bookConverter;
-        this.personRepository = personRepository;
-    }
 
     public BorrowedDto find(Integer id) {
         BorrowedEntity borrowedEntity = borrowedRepository.findById(id).orElseThrow(NoSuchElementException::new);

@@ -13,22 +13,21 @@ import java.time.LocalDate;
 @Entity(name = "BORROWED")
 public class BorrowedEntity extends BaseEntity {
 
-
-    // @Relation
-    @ManyToOne(fetch = FetchType.LAZY)
-    private PersonEntity personEntity;
-
-    //@Relation
-    @ManyToOne(fetch = FetchType.LAZY)
-    private BookEntity bookEntity;
-
     @Column(name = "borrow_start_date", nullable = false)
     private LocalDate borrowStartDate;
 
     @Column(name = "return_end_date", nullable = false)
     private LocalDate borrowEndDate;
 
-    //@Column(name = "borrow_return_date", nullable = false)
-    //private LocalDate borrowReturnDate;
+    @Column(name = "borrow_return_date")
+    private LocalDate borrowReturnDate;
+
+    // @Relation
+    @ManyToOne(fetch = FetchType.LAZY)
+    private BookEntity bookEntity;
+
+    // @Relation
+    @ManyToOne(fetch = FetchType.LAZY)
+     private PersonEntity personEntity;
 }
 

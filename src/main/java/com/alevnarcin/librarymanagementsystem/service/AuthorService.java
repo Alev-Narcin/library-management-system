@@ -8,26 +8,19 @@ import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.repository.AuthorRepository;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
     private final AuthorConverter authorConverter;
-    private BookService bookService;
-    private final BookConverter bookConverter;
     private final BookRepository bookRepository;
-
-    public AuthorService(AuthorRepository authorRepository, AuthorConverter authorConverter, BookConverter bookConverter, BookRepository bookRepository) {
-        this.authorRepository = authorRepository;
-        this.authorConverter = authorConverter;
-        this.bookConverter = bookConverter;
-        this.bookRepository = bookRepository;
-    }
 
     public AuthorDto find(Integer id) {
         AuthorEntity entity = authorRepository.findById(id).orElseThrow(NoSuchElementException::new);
@@ -47,14 +40,12 @@ public class AuthorService {
         authorEntity.setId(authorDto.getId());
 
         return authorConverter.authorEntityToAuthorDto(authorRepository.save(authorEntity));
-
     }
 
     public  void delete(Integer authorId) {
         AuthorEntity authorEntity = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
         authorRepository.delete(authorEntity);
     }
-
 
     public BookEntity getBook(Integer authorId, Integer bookId) {
         AuthorEntity authorEntity = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
@@ -63,7 +54,6 @@ public class AuthorService {
         bookEntity.getAuthorEntities().add(authorEntity);
 
         return bookRepository.save(bookEntity);
-
     }
 
 }

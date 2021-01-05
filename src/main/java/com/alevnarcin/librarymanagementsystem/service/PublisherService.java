@@ -8,6 +8,7 @@ import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PublisherEntity;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PublisherRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,19 +16,13 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class PublisherService {
 
     private final PublisherRepository publisherRepository;
     private final PublisherConverter publisherConverter;
     private final BookRepository bookRepository;
-    private final BookConverter bookConverter;
 
-    public PublisherService(PublisherRepository publisherRepository, PublisherConverter publisherConverter, BookRepository bookRepository, BookConverter bookConverter) {
-        this.publisherRepository = publisherRepository;
-        this.publisherConverter = publisherConverter;
-        this.bookRepository = bookRepository;
-        this.bookConverter = bookConverter;
-    }
 
     public PublisherDto find(Integer id) {
         PublisherEntity entity = publisherRepository.findById(id).orElseThrow(NoSuchElementException::new);
@@ -61,7 +56,5 @@ public class PublisherService {
         bookEntity.getPublisherEntities().add(publisherEntity);
 
         return bookRepository.save(bookEntity);
-
     }
-
 }

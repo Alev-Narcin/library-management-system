@@ -3,6 +3,7 @@ package com.alevnarcin.librarymanagementsystem.controller;
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.entity.*;
 import com.alevnarcin.librarymanagementsystem.service.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,10 @@ import java.util.Objects;
 @RestController    // bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
                    // Response, browser'a dönülen HTTP mesajı oluyor.
 @RequestMapping(value = "/books", produces = {"application/json"})     // class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
+@RequiredArgsConstructor
 public class BookRestController {
 
-    private BookService bookService;
-
-    public BookRestController(BookService service) {
-
-        this.bookService = Objects.requireNonNull(service);
-    }
+    private final BookService bookService;
 
     // parantez { içerisinde tanımlı olan değişkenler
     // @PathVariable'ında annotate edilen parametre ile eşleştirilir.

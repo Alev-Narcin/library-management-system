@@ -4,6 +4,7 @@ package com.alevnarcin.librarymanagementsystem.controller;
 import com.alevnarcin.librarymanagementsystem.dto.AuthorDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.service.AuthorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,15 +14,10 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/authors", produces = {"application/json"})
+@RequiredArgsConstructor
 public class AuthorRestController {
 
-    private AuthorService authorService;
-
-    public AuthorRestController(AuthorService service) {
-
-        this.authorService = Objects.requireNonNull(service);
-
-    }
+    private final AuthorService authorService;
 
     @GetMapping("/{authorId}")
     public ResponseEntity<AuthorDto> get(@PathVariable("authorId") int id) {
@@ -34,7 +30,6 @@ public class AuthorRestController {
         }
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/new", consumes = {"application/json"})
     public ResponseEntity<AuthorDto> create(@RequestBody AuthorDto authorDto) {
 
