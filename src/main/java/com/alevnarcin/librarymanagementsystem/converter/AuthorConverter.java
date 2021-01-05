@@ -22,7 +22,5 @@ public class AuthorConverter {
         authorEntity.setName(authorDto.getName());
 
         return authorEntity;
-
     }
-
 }

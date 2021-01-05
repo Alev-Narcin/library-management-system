@@ -3,22 +3,17 @@ package com.alevnarcin.librarymanagementsystem.service;
 
 import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.converter.PersonConverter;
-import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
-import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
+import com.alevnarcin.librarymanagementsystem.exception.response.ExceptionResponse;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import com.alevnarcin.librarymanagementsystem.repository.BorrowedRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 @Service
 //@RequiredArgsConstructor
@@ -31,7 +26,7 @@ public class PersonService {
     private final BorrowedRepository borrowedRepository;
 
     @Autowired
-    public PersonService(BorrowedRepository borrowedRepository,PersonRepository personRepository, PersonConverter personConverter, BookRepository bookRepository, BookConverter bookConverter) {
+    public PersonService(BorrowedRepository borrowedRepository, PersonRepository personRepository, PersonConverter personConverter, BookRepository bookRepository, BookConverter bookConverter) {
         this.personRepository = personRepository;
         this.personConverter = personConverter;
         this.bookRepository = bookRepository;
@@ -40,7 +35,12 @@ public class PersonService {
     }
 
     public PersonDto find(int id) {
-        PersonEntity entity = personRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        PersonEntity entity = personRepository.findById(id).orElse(null);
+
+        if (entity == null) {
+            throw new ExceptionResponse("Hata var. Düzgün istek at kardeşim");
+        }
+
         return personConverter.personEntityToPersonDto(entity);
     }
 
