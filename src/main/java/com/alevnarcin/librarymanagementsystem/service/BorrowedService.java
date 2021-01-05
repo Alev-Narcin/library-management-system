@@ -1,6 +1,5 @@
 package com.alevnarcin.librarymanagementsystem.service;
 
-import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.converter.BorrowedConverter;
 import com.alevnarcin.librarymanagementsystem.dto.BorrowedDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
@@ -12,8 +11,6 @@ import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
-import java.awt.print.Book;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
 
@@ -27,7 +24,7 @@ public class BorrowedService {
     private final PersonRepository personRepository;
 
     public BorrowedDto find(Integer id) {
-        BorrowedEntity borrowedEntity = borrowedRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        BorrowedEntity borrowedEntity = borrowedRepository.findById(id).orElseThrow(() -> new RuntimeException("cannot find borrow id"));
         return borrowedConverter.borrowedEntityToBorrowedDto(borrowedEntity);
     }
 

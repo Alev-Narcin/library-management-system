@@ -29,7 +29,7 @@ public class PersonService {
         PersonEntity entity = personRepository.findById(id).orElse(null);
 
         if (entity == null) {
-            throw new ExceptionResponse("Hata var doldur.");
+            throw new ExceptionResponse("Oopps cannot find person.");
         }
 
         return personConverter.personEntityToPersonDto(entity);
