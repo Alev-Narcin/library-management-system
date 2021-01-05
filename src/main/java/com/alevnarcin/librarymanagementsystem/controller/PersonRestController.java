@@ -5,6 +5,7 @@ import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
+import com.alevnarcin.librarymanagementsystem.exception.ApiRequestException;
 import com.alevnarcin.librarymanagementsystem.service.PersonService;
 import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.RequiredArgsConstructor;
@@ -31,13 +32,12 @@ public class PersonRestController {
 
     @GetMapping("/{personId}")
     public ResponseEntity<PersonDto> get(@PathVariable("personId") int id) {
-        try {
-            PersonDto personDto = personService.find(id);
-            return new ResponseEntity<>(personDto, HttpStatus.OK);
 
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        //throw new ApiRequestException("Cannot get person with custom exception");
+
+        PersonDto personDto = personService.find(id);
+        return new ResponseEntity<>(personDto,HttpStatus.OK);
+
     }
 
 
@@ -64,10 +64,9 @@ public class PersonRestController {
     }
 
 
-
-    @GetMapping("/get-borrowed/{personId}/{borrowedId}")
-    public ResponseEntity<BorrowedEntity> getBorrow(@PathVariable("personId") Integer personId, @PathVariable("borrowedId") Integer borrowedId) {
-        return ResponseEntity.ok(personService.getBorrow(personId,borrowedId));
+    @GetMapping("/get-borrowed/{personId}/{bookId}")
+    public ResponseEntity<BorrowedEntity> getBorrow(@PathVariable("personId") Integer personId, @PathVariable("bookId") Integer bookId) {
+        return ResponseEntity.ok(personService.getBorrow(personId,bookId));
     }
 
 

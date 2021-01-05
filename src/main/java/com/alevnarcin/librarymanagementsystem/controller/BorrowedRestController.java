@@ -61,7 +61,7 @@ public class BorrowedRestController {
         return ResponseEntity.ok(borrowedService.getBook(borrowedId,bookId));
     }
 
-    //personEntity&borrowedEntity
+    //personEntity&bookEntity
     @GetMapping("/get-borrow/{personId}/{bookId}")
     public ResponseEntity<PersonEntity> getBorrow(@PathVariable("personId") Integer personId , @PathVariable("bookId") Integer bookId) {
         return ResponseEntity.ok(borrowedService.getBorrow(personId, bookId));

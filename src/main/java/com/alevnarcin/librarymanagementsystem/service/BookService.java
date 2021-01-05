@@ -46,7 +46,6 @@ public class BookService {
 
     public BookDto find(int id) {
         BookEntity entity = bookRepository.findById(id).orElseThrow(NoSuchElementException::new);
-
         return bookConverter.bookEntityToBookDto(entity);
     }
 

@@ -71,8 +71,8 @@ public class PersonService {
     }
 
 
-    public BorrowedEntity getBorrow(Integer borrowedId, Integer personId) {
-        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElseThrow(NoSuchElementException::new);
+    public BorrowedEntity getBorrow(Integer bookId, Integer personId) {
+        BorrowedEntity borrowedEntity = borrowedRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
         PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
         borrowedEntity.setPersonEntity(personEntity);
 

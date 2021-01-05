@@ -28,7 +28,7 @@ public class BorrowedEntity extends BaseEntity {
     @Column(name = "return_end_date", nullable = false)
     private LocalDate borrowEndDate;
 
-    @Column(name = "borrow_return_date", nullable = false)
-    private LocalDate borrowReturnDate;
+    //@Column(name = "borrow_return_date", nullable = false)
+    //private LocalDate borrowReturnDate;
 }
 

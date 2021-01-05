@@ -16,7 +16,8 @@ import java.time.LocalDate;
 public class BorrowedDto {
 
     private Integer id;
-    private LocalDate borrowanceDate;
-    private LocalDate returnDate;
+    private LocalDate borrowStartDate;;
+    private LocalDate borrowEndDate;
+    //private LocalDate borrowReturnDate;
 
 }
