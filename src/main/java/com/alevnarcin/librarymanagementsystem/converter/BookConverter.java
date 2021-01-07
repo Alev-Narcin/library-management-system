@@ -20,6 +20,7 @@ public class BookConverter {
         bookDto.setSupplyType(bookEntity.getSupplyType());
         bookDto.setSupplyDate(bookEntity.getSupplyDate());
         bookDto.setSerial_number((bookEntity.getSerial_number()));
+        bookDto.setIsAvailable(bookEntity.getIsAvailable());
 
         return bookDto;
     }
@@ -33,6 +34,7 @@ public class BookConverter {
         bookEntity.setSupplyType(bookDto.getSupplyType());
         bookEntity.setSupplyDate(bookDto.getSupplyDate());
         bookEntity.setSerial_number(bookDto.getSerial_number());
+        bookEntity.setIsAvailable(bookDto.getIsAvailable());
 
         return bookEntity;
     }

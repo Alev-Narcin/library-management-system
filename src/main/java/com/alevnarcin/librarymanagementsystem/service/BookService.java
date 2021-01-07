@@ -60,6 +60,7 @@ public class BookService {
         }
         bookEntity.setName(bookDto.getName());
         bookEntity.setSupplyType(bookDto.getSupplyType());
+        bookDto.setIsAvailable(bookDto.getIsAvailable());
 
 
         return bookConverter.bookEntityToBookDto(bookRepository.save(bookEntity));

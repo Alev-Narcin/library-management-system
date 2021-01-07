@@ -22,8 +22,8 @@ public class BookDto {
     private Set<AuthorEntity> authorNames = new HashSet<>();
     private String publisher;
     private BookType type;
-    private Long stock;
     private String supplyType;
     private LocalDateTime supplyDate;
     private String serial_number;
+    private Boolean isAvailable;
 }
