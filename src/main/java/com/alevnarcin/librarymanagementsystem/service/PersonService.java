@@ -13,6 +13,7 @@ import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
@@ -25,16 +26,16 @@ public class PersonService {
     private final BorrowedRepository borrowedRepository;
 
 
+    @Transactional
     public PersonDto find(int id) {
         PersonEntity entity = personRepository.findById(id).orElse(null);
-
         if (entity == null) {
-            throw new ExceptionResponse("Hata var doldur.");
+            throw new ExceptionResponse("Oopps cannot find person... ");
         }
-
         return personConverter.personEntityToPersonDto(entity);
     }
 
+    @Transactional
     public PersonDto create(PersonDto personDto) {
         PersonEntity personEntity = personConverter.personDtoToPersonEntity(personDto);
         PersonEntity savedPersonEntitiy = personRepository.save(personEntity);
@@ -42,9 +43,12 @@ public class PersonService {
         return personConverter.personEntityToPersonDto(savedPersonEntitiy);
     }
 
+    @Transactional
     public PersonDto update(PersonDto personDto, Integer personId) {
-        PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
-
+        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        if (personEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find person... ");
+        }
         personEntity.setAddress(personDto.getAddress());
         personEntity.setName(personDto.getName());
         personEntity.setEmail(personDto.getEmail());
@@ -53,14 +57,25 @@ public class PersonService {
         return personConverter.personEntityToPersonDto(personRepository.save(personEntity));
     }
 
+    @Transactional
     public void delete(Integer personId) {
-        PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
+        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        if (personEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find person... ");
+        }
         personRepository.delete(personEntity);
     }
 
+    @Transactional
     public BorrowedEntity getBorrow(Integer bookId, Integer personId) {
-        BorrowedEntity borrowedEntity = borrowedRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
-        PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
+        BorrowedEntity borrowedEntity = borrowedRepository.findById(bookId).orElse(null);
+        if (borrowedEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find borrowed... ");
+        }
+        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        if (personEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find person... ");
+        }
         borrowedEntity.setPersonEntity(personEntity);
 
         return borrowedRepository.save(borrowedEntity);

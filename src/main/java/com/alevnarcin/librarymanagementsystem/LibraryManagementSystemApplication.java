@@ -18,6 +18,10 @@ public class LibraryManagementSystemApplication {
         SpringApplication.run(LibraryManagementSystemApplication.class, args);
     }
 
+
+
+
+
     // method adı ile bir tane CommandLineRunner bean'i yarat.
     // Autowired olarak CommandLineRunner istenen yerlere bu yaratılan Bean'ı kullanabiliyor.
 

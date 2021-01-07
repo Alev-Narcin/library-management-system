@@ -18,6 +18,6 @@ public class BorrowedDto {
     private Integer id;
     private LocalDate borrowStartDate;;
     private LocalDate borrowEndDate;
-    //private LocalDate borrowReturnDate;
+    private LocalDate borrowReturnDate;
 
 }

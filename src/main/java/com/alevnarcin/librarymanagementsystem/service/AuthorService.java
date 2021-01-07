@@ -6,10 +6,12 @@ import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.dto.AuthorDto;
 import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
+import com.alevnarcin.librarymanagementsystem.exception.response.ExceptionResponse;
 import com.alevnarcin.librarymanagementsystem.repository.AuthorRepository;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -22,34 +24,53 @@ public class AuthorService {
     private final AuthorConverter authorConverter;
     private final BookRepository bookRepository;
 
+    @Transactional
     public AuthorDto find(Integer id) {
-        AuthorEntity entity = authorRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        AuthorEntity entity = authorRepository.findById(id).orElse(null);
+        if (entity == null) {
+            throw new ExceptionResponse("Oopps cannot find author... ");
+        }
         return authorConverter.authorEntityToAuthorDto(entity);
     }
 
+    @Transactional
     public AuthorDto create(AuthorDto authorDto) {
         AuthorEntity authorEntity = authorConverter.authorDtoToAuthorEntity(authorDto);
         AuthorEntity savedAuthorEntity = authorRepository.save(authorEntity);
+
         return authorConverter.authorEntityToAuthorDto(savedAuthorEntity);
     }
 
+    @Transactional
     public AuthorDto update(AuthorDto authorDto, Integer authorId) {
-        AuthorEntity authorEntity = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
-
+        AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
+        if (authorEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find author... ");
+        }
         authorEntity.setName(authorDto.getName());
-        authorEntity.setId(authorDto.getId());
 
         return authorConverter.authorEntityToAuthorDto(authorRepository.save(authorEntity));
     }
 
+    @Transactional
     public  void delete(Integer authorId) {
-        AuthorEntity authorEntity = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
+        AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
+        if (authorEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find author... ");
+        }
         authorRepository.delete(authorEntity);
     }
 
+    @Transactional
     public BookEntity getBook(Integer authorId, Integer bookId) {
-        AuthorEntity authorEntity = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
-        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
+        if (authorEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find author... ");
+        }
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        if (bookEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find book... ");
+        }
         authorEntity.getBookEntities().add(bookEntity);
         bookEntity.getAuthorEntities().add(authorEntity);
 

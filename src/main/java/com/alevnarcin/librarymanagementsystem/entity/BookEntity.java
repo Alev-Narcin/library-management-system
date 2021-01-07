@@ -32,8 +32,9 @@ public class BookEntity extends BaseEntity {
     @Column(name = "type", updatable = false)
     private BookType type;
 
-    @Column(name = "stock")
-    private Long stock;
+    @Column(name = "is_availale")
+    private Boolean isAvailable;
+
     //bağış,satın alma gibi
     @Column(name = "supply_type", length = 64)
     private String supplyType;

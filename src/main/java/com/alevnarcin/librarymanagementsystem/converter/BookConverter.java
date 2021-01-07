@@ -17,7 +17,6 @@ public class BookConverter {
         bookDto.setName(bookEntity.getName());
         bookDto.setAuthorNames(bookEntity.getAuthorEntities());
         bookDto.setType(bookEntity.getType());
-        bookDto.setStock(bookEntity.getStock());
         bookDto.setSupplyType(bookEntity.getSupplyType());
         bookDto.setSupplyDate(bookEntity.getSupplyDate());
         bookDto.setSerial_number((bookEntity.getSerial_number()));
@@ -31,7 +30,6 @@ public class BookConverter {
         bookEntity.setName(bookDto.getName());
         bookEntity.setAuthorEntities(bookDto.getAuthorNames());
         bookEntity.setType(bookDto.getType());
-        bookEntity.setStock(bookDto.getStock());
         bookEntity.setSupplyType(bookDto.getSupplyType());
         bookEntity.setSupplyDate(bookDto.getSupplyDate());
         bookEntity.setSerial_number(bookDto.getSerial_number());

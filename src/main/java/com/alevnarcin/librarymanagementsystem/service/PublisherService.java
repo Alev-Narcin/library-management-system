@@ -6,10 +6,12 @@ import com.alevnarcin.librarymanagementsystem.dto.PublisherDto;
 import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PublisherEntity;
+import com.alevnarcin.librarymanagementsystem.exception.response.ExceptionResponse;
 import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PublisherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.NoSuchElementException;
@@ -24,34 +26,53 @@ public class PublisherService {
     private final BookRepository bookRepository;
 
 
+    @Transactional
     public PublisherDto find(Integer id) {
-        PublisherEntity entity = publisherRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        PublisherEntity entity = publisherRepository.findById(id).orElse(null);
+        if (entity == null) {
+            throw new ExceptionResponse("Oopps cannot find publisher... ");
+        }
         return publisherConverter.publisherEntityToPublisherDto(entity);
     }
 
+    @Transactional
     public PublisherDto create(PublisherDto publisherDto) {
         PublisherEntity publisherEntity = publisherConverter.publisherDtoToPublisherEntity(publisherDto);
         PublisherEntity savedPublisherEntity = publisherRepository.save(publisherEntity);
+
         return publisherConverter.publisherEntityToPublisherDto(savedPublisherEntity);
     }
 
+    @Transactional
     public PublisherDto update(PublisherDto publisherDto, Integer publisherId) {
-        PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElseThrow(NoSuchElementException::new);
-
+        PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElse(null);
+        if (publisherEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find publisher... ");
+        }
         publisherEntity.setName(publisherDto.getName());
-        publisherEntity.setId(publisherDto.getId());
 
         return publisherConverter.publisherEntityToPublisherDto(publisherRepository.save(publisherEntity));
     }
 
+    @Transactional
     public void delete(Integer publisherId) {
         PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElse(null);
+        if (publisherEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find publisher... ");
+        }
         publisherRepository.delete(publisherEntity);
     }
 
+    @Transactional
     public BookEntity getBook(Integer publisherId, Integer bookId) {
-        PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElseThrow(NoSuchElementException::new);
-        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElse(null);
+        if (publisherEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find publisher... ");
+        }
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        if (bookEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find book... ");
+        }
         publisherEntity.getBookEntities().add(bookEntity);
         bookEntity.getPublisherEntities().add(publisherEntity);
 

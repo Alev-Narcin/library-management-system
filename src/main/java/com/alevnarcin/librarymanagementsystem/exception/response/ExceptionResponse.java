@@ -6,7 +6,4 @@ public class ExceptionResponse extends RuntimeException {
         super(message);
     }
 
-    public ExceptionResponse(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

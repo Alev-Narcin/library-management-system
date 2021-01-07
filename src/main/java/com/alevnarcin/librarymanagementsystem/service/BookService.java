@@ -5,12 +5,14 @@ import com.alevnarcin.librarymanagementsystem.converter.PersonConverter;
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.dto.BorrowedDto;
 import com.alevnarcin.librarymanagementsystem.entity.*;
+import com.alevnarcin.librarymanagementsystem.exception.response.ExceptionResponse;
 import com.alevnarcin.librarymanagementsystem.repository.*;
 import com.alevnarcin.librarymanagementsystem.validation.BookValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.NoSuchElementException;
@@ -22,7 +24,6 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final BookConverter bookConverter;
-    private PersonService personService;
     private final AuthorRepository authorRepository;
     private final BorrowedRepository borrowedRepository;
     private final PublisherRepository publisherRepository;
@@ -30,42 +31,61 @@ public class BookService {
 
     @Autowired
     public BookService setPersonService(PersonService personService) {
-        this.personService = personService;
         return this;
     }
 
+    @Transactional
     public BookDto find(int id) {
-        BookEntity entity = bookRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        BookEntity entity = bookRepository.findById(id).orElse(null);
+        if (entity == null) {
+            throw new ExceptionResponse("Oopps cannot find book... ");
+        }
         return bookConverter.bookEntityToBookDto(entity);
     }
 
+    @Transactional
     public BookDto create(BookDto bookDto) {
         BookValidation.validateBook(bookDto);
         BookEntity bookEntity = bookConverter.bookDtoToBookEntity(bookDto);  // 1. convert dto to entity
         BookEntity savedBookEntity = bookRepository.save(bookEntity);       // 2. save entity to database
-        return bookConverter.bookEntityToBookDto(savedBookEntity);       // 3. convert entity to dto and return bookDto
+
+        return bookConverter.bookEntityToBookDto(savedBookEntity);          // 3. convert entity to dto and return bookDto
     }
 
+    @Transactional
     public BookDto update(BookDto bookDto, Integer bookId) {
-        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
-
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        if (bookEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find book... ");
+        }
         bookEntity.setName(bookDto.getName());
         bookEntity.setSupplyType(bookDto.getSupplyType());
-        bookEntity.setStock(bookDto.getStock());
+
 
         return bookConverter.bookEntityToBookDto(bookRepository.save(bookEntity));
     }
 
+    @Transactional
     public void delete(Integer bookId) {
-        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        if (bookEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find book... ");
+        }
         bookRepository.delete(bookEntity);
     }
 
 
     //RELATİON -> bookEntity&authorEntity
+    @Transactional
     public AuthorEntity getAuthor(Integer authorId, Integer bookId) {
-        AuthorEntity authorEntity = authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
-        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
+        if (authorEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find author... ");
+        }
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        if (bookEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find book... ");
+        }
         authorEntity.getBookEntities().add(bookEntity);
         bookEntity.getAuthorEntities().add(authorEntity);
 
@@ -73,9 +93,16 @@ public class BookService {
     }
 
     //RELATİON -> bookEntity&publisherEntity
+    @Transactional
     public PublisherEntity getPublisher(Integer publisherId, Integer bookId) {
-        PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElseThrow(NoSuchElementException::new);
-        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElse(null);
+        if (publisherEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find publisher... ");
+        }
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        if (bookEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find book... ");
+        }
         publisherEntity.getBookEntities().add(bookEntity);
         bookEntity.getPublisherEntities().add(publisherEntity);
 
@@ -84,9 +111,17 @@ public class BookService {
 
 
     //RELATION -> bookEntity&borrowedEntity
+    @Transactional
     public BorrowedEntity getBorrow(Integer borrowedId, Integer bookId) {
-        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElseThrow(NoSuchElementException::new);
-        BookEntity bookEntity = bookRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
+        BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElse(null);
+        if (borrowedEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find borrowed... ");
+        }
+        BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+        if (bookEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find book... ");
+        }
+
         borrowedEntity.setBookEntity(bookEntity);
 
         return borrowedRepository.save(borrowedEntity);
