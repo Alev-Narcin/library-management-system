@@ -1,11 +1,13 @@
 package com.alevnarcin.librarymanagementsystem.exception.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import java.time.ZonedDateTime;
 
 
 @Getter
+@Setter
 public class ExceptionModel {
 
     private final String message;
