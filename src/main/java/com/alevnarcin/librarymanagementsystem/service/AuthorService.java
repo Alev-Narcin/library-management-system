@@ -24,7 +24,6 @@ public class AuthorService {
     private final AuthorConverter authorConverter;
     private final BookRepository bookRepository;
 
-    @Transactional
     public AuthorDto find(Integer id) {
         AuthorEntity entity = authorRepository.findById(id).orElse(null);
         if (entity == null) {
@@ -33,7 +32,6 @@ public class AuthorService {
         return authorConverter.authorEntityToAuthorDto(entity);
     }
 
-    @Transactional
     public AuthorDto create(AuthorDto authorDto) {
         AuthorEntity authorEntity = authorConverter.authorDtoToAuthorEntity(authorDto);
         AuthorEntity savedAuthorEntity = authorRepository.save(authorEntity);
@@ -41,7 +39,6 @@ public class AuthorService {
         return authorConverter.authorEntityToAuthorDto(savedAuthorEntity);
     }
 
-    @Transactional
     public AuthorDto update(AuthorDto authorDto, Integer authorId) {
         AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
         if (authorEntity == null) {
@@ -52,7 +49,6 @@ public class AuthorService {
         return authorConverter.authorEntityToAuthorDto(authorRepository.save(authorEntity));
     }
 
-    @Transactional
     public  void delete(Integer authorId) {
         AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
         if (authorEntity == null) {
@@ -61,7 +57,6 @@ public class AuthorService {
         authorRepository.delete(authorEntity);
     }
 
-    @Transactional
     public BookEntity getBook(Integer authorId, Integer bookId) {
         AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
         if (authorEntity == null) {

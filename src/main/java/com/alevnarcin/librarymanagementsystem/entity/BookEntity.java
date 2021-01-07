@@ -11,7 +11,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Entity(name = "BOOK")         // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
+@Entity(name = "BOOK")
+// JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
 @Table(name = "t_book")          // tablo adı
 @Getter
 @Setter
@@ -32,7 +33,7 @@ public class BookEntity extends BaseEntity {
     @Column(name = "type", updatable = false)
     private BookType type;
 
-    @Column(name = "is_availale")
+    @Column(name = "is_availale", nullable = false)
     private Boolean isAvailable;
 
     //bağış,satın alma gibi
@@ -41,12 +42,6 @@ public class BookEntity extends BaseEntity {
 
     @Column(name = "supply_date", nullable = false, updatable = false)
     private LocalDateTime supplyDate;
-
-
-    public BookEntity() {
-
-        super();
-    }
 
     //Relation authorEntity&bookEntity
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -57,7 +52,7 @@ public class BookEntity extends BaseEntity {
 
 
     //Relation borrowedEntity&bookEntity
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL , mappedBy = "bookEntity")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bookEntity")
     @JsonIgnoreProperties(value = "bookEntity")
     private Set<BorrowedEntity> borrowedEntities = new HashSet<>();
 
@@ -67,10 +62,4 @@ public class BookEntity extends BaseEntity {
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "publisher_id"))
     private Set<PublisherEntity> publisherEntities = new HashSet<>();
-
-
-    public Set<PublisherEntity> getPublisherEntities() {
-        return publisherEntities;
-    }
-
 }

@@ -46,8 +46,8 @@ public class BorrowedService {
         if (borrowedEntity == null) {
             throw new ExceptionResponse("Oopps cannot find borrowed... ");
         }
+
         borrowedEntity.setBorrowStartDate(borrowedDto.getBorrowStartDate());
-        borrowedEntity.setBorrowEndDate(borrowedDto.getBorrowEndDate());
         borrowedEntity.setBorrowReturnDate(borrowedDto.getBorrowReturnDate());
 
         return borrowedConverter.borrowedEntityToBorrowedDto(borrowedRepository.save(borrowedEntity));
@@ -76,21 +76,31 @@ public class BorrowedService {
 
     public PersonEntity getBorrow(Integer bookId, Integer personId) {
         PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+
         if (personEntity == null) {
             throw new ExceptionResponse("Oopps cannot find person... ");
         }
+
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
+
         if (bookEntity == null) {
             throw new ExceptionResponse("Oopps cannot find book... ");
         }
-        BorrowedEntity borrowedEntity = new BorrowedEntity();
-        borrowedEntity.setPersonEntity(personEntity);
-        borrowedEntity.setBookEntity(bookEntity);
-        borrowedEntity.setBorrowStartDate(LocalDate.now());
-        borrowedEntity.setBorrowEndDate(LocalDate.now().plusDays(30));
-        personEntity.getBorrowedEntities().add(borrowedEntity);
 
-        return personRepository.save(personEntity);
+        if (!bookEntity.getIsAvailable()) {
+            throw new ExceptionResponse("Oopps cannot find book... ");
+        } else {
+            BorrowedEntity borrowedEntity = new BorrowedEntity();
+            borrowedEntity.setPersonEntity(personEntity);
+            borrowedEntity.setBookEntity(bookEntity);
+            borrowedEntity.setBorrowStartDate(LocalDate.now());
+            borrowedEntity.setBorrowEndDate(LocalDate.now().plusDays(30));
+            personEntity.getBorrowedEntities().add(borrowedEntity);
+            bookEntity.setIsAvailable(false);
+
+            bookRepository.save(bookEntity);
+
+            return personRepository.save(personEntity);
+        }
     }
-
 }

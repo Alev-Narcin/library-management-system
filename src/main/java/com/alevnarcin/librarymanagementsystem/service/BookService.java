@@ -34,7 +34,7 @@ public class BookService {
         return this;
     }
 
-    @Transactional
+
     public BookDto find(int id) {
         BookEntity entity = bookRepository.findById(id).orElse(null);
         if (entity == null) {
@@ -43,7 +43,6 @@ public class BookService {
         return bookConverter.bookEntityToBookDto(entity);
     }
 
-    @Transactional
     public BookDto create(BookDto bookDto) {
         BookValidation.validateBook(bookDto);
         BookEntity bookEntity = bookConverter.bookDtoToBookEntity(bookDto);  // 1. convert dto to entity
@@ -52,7 +51,6 @@ public class BookService {
         return bookConverter.bookEntityToBookDto(savedBookEntity);          // 3. convert entity to dto and return bookDto
     }
 
-    @Transactional
     public BookDto update(BookDto bookDto, Integer bookId) {
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
         if (bookEntity == null) {
@@ -60,13 +58,12 @@ public class BookService {
         }
         bookEntity.setName(bookDto.getName());
         bookEntity.setSupplyType(bookDto.getSupplyType());
-        bookDto.setIsAvailable(bookDto.getIsAvailable());
-
+        bookEntity.setType(bookDto.getType());
+        bookEntity.setIsAvailable(bookDto.getIsAvailable());
 
         return bookConverter.bookEntityToBookDto(bookRepository.save(bookEntity));
     }
 
-    @Transactional
     public void delete(Integer bookId) {
         BookEntity bookEntity = bookRepository.findById(bookId).orElse(null);
         if (bookEntity == null) {
@@ -77,7 +74,6 @@ public class BookService {
 
 
     //RELATİON -> bookEntity&authorEntity
-    @Transactional
     public AuthorEntity getAuthor(Integer authorId, Integer bookId) {
         AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
         if (authorEntity == null) {
@@ -94,7 +90,6 @@ public class BookService {
     }
 
     //RELATİON -> bookEntity&publisherEntity
-    @Transactional
     public PublisherEntity getPublisher(Integer publisherId, Integer bookId) {
         PublisherEntity publisherEntity = publisherRepository.findById(publisherId).orElse(null);
         if (publisherEntity == null) {
@@ -110,9 +105,7 @@ public class BookService {
         return publisherRepository.save(publisherEntity);
     }
 
-
     //RELATION -> bookEntity&borrowedEntity
-    @Transactional
     public BorrowedEntity getBorrow(Integer borrowedId, Integer bookId) {
         BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElse(null);
         if (borrowedEntity == null) {
@@ -122,7 +115,6 @@ public class BookService {
         if (bookEntity == null) {
             throw new ExceptionResponse("Oopps cannot find book... ");
         }
-
         borrowedEntity.setBookEntity(bookEntity);
 
         return borrowedRepository.save(borrowedEntity);
