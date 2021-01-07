@@ -29,7 +29,7 @@ public class PersonService {
         PersonEntity entity = personRepository.findById(id).orElse(null);
 
         if (entity == null) {
-            throw new ExceptionResponse("Hata var doldur.");
+            throw new ExceptionResponse("Oopps cannot find person...");
         }
 
         return personConverter.personEntityToPersonDto(entity);
@@ -43,8 +43,10 @@ public class PersonService {
     }
 
     public PersonDto update(PersonDto personDto, Integer personId) {
-        PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
-
+        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        if (personEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find person...");
+        }
         personEntity.setAddress(personDto.getAddress());
         personEntity.setName(personDto.getName());
         personEntity.setEmail(personDto.getEmail());
@@ -54,13 +56,22 @@ public class PersonService {
     }
 
     public void delete(Integer personId) {
-        PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
+        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        if (personEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find person...");
+        }
         personRepository.delete(personEntity);
     }
 
     public BorrowedEntity getBorrow(Integer bookId, Integer personId) {
-        BorrowedEntity borrowedEntity = borrowedRepository.findById(bookId).orElseThrow(NoSuchElementException::new);
-        PersonEntity personEntity = personRepository.findById(personId).orElseThrow(NoSuchElementException::new);
+        BorrowedEntity borrowedEntity = borrowedRepository.findById(bookId).orElse(null);
+        if (borrowedEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find borrowed...");
+        }
+        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+        if (personEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find person...");
+        }
         borrowedEntity.setPersonEntity(personEntity);
 
         return borrowedRepository.save(borrowedEntity);
