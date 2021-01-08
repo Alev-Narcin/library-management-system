@@ -6,6 +6,7 @@ import com.alevnarcin.librarymanagementsystem.enumeration.PersonType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
+import sun.security.util.Password;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -39,6 +40,9 @@ public class PersonEntity extends BaseEntity {
 
     @Column(name = "address", nullable = false)
     private String address;
+
+//    @Column(name = "password", nullable = false)
+//    private String password;
 
     public PersonEntity(){
         super();
