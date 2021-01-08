@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -23,6 +25,30 @@ public class PersonService {
     private final PersonRepository personRepository;
     private final PersonConverter personConverter;
     private final BorrowedRepository borrowedRepository;
+
+
+    public List<PersonDto> findAll() {
+
+        List<PersonEntity> entity = personRepository.findAll();
+
+        if (entity == null) {
+            throw new ExceptionResponse("Oopps cannot find person...");
+        }
+
+        List<PersonDto> entityDtos = new ArrayList<>();
+        PersonDto entityDto ;
+
+        for(int i=0; i<entity.size(); i++) {
+
+            if(!entity.get(i).getName().equals("admin")){
+
+                entityDto = personConverter.personEntityToPersonDto(entity.get(i)) ;
+                entityDtos.add(entityDto);
+            }
+        }
+
+        return entityDtos;
+    }
 
 
     public PersonDto find(int id) {

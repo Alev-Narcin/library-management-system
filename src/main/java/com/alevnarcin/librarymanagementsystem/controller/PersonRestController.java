@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -45,4 +46,12 @@ public class PersonRestController {
     public ResponseEntity<BorrowedEntity> getBorrow(@PathVariable("personId") Integer personId, @PathVariable("bookId") Integer bookId) {
         return ResponseEntity.ok(personService.getBorrow(personId, bookId));
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<PersonDto>> getAll() {
+        List<PersonDto> personDto = personService.findAll();
+        return new ResponseEntity<>(personDto, HttpStatus.OK);
+    }
+
+
 }
