@@ -33,7 +33,7 @@ public class BookEntity extends BaseEntity {
     @Column(name = "type", updatable = false)
     private BookType type;
 
-    @Column(name = "is_availale", nullable = false)
+    @Column(name = "is_available", nullable = false)
     private Boolean isAvailable;
 
     //bağış,satın alma gibi

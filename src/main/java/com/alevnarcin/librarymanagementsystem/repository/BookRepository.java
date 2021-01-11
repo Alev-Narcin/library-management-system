@@ -15,7 +15,4 @@ import java.util.Set;
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     Set<BookEntity> findAllByIsAvailable(Boolean isAvailable);
-
-//    @Query(value = "select book from BOOK book order by ?1", nativeQuery = true)
-//    Set<BookEntity> findAllOrderByName(String name);
 }
