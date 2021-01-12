@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -25,7 +26,11 @@ public class BookRestController {
     // yani method çağrılırken parametrenin değeri adres satırında karşılık gelen yerdeki değerdir.
 
     @GetMapping("/book")
-    public ResponseEntity<BookDto> getAllBook(){
+    public ResponseEntity<List<BookDto>> getAllBook(){
+
+        if(bookService.findAll()==null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
         return new ResponseEntity<>(bookService.findAll(), HttpStatus.OK);
     }
 

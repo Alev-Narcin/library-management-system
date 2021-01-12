@@ -27,5 +27,5 @@ public class PersonDto {
     private LocalDateTime memberShipDate;
     private String address;
     private Set<BookEntity> bookEntities = new HashSet<>();
-    private String password;
+    //private String password;
 }

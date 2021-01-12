@@ -3,7 +3,9 @@ package com.alevnarcin.librarymanagementsystem.service;
 
 import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.converter.PersonConverter;
+import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
+import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.exception.response.ExceptionResponse;
@@ -26,6 +28,17 @@ public class PersonService {
     private final PersonConverter personConverter;
     private final BorrowedRepository borrowedRepository;
 
+    public List<PersonDto> findAllPerson(){
+        List<PersonEntity> allPersons = personRepository.findAll();
+        List<PersonDto> allDto = new ArrayList<>();
+        if(allPersons == null) {
+            return null;
+        }
+        for(int i=0; i<allPersons.size(); i++) {
+            allDto.add(personConverter.personEntityToPersonDto(allPersons.get(i)));
+        }
+        return allDto;
+    }
 
     public List<PersonDto> findAll() {
 

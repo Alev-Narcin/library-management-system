@@ -1,6 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
 
+import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.service.LoginServices;
@@ -14,14 +15,23 @@ import sun.security.util.Password;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/persons", produces = {"application/json"})
 @RequiredArgsConstructor
 public class PersonRestController {
 
     private final PersonService personService;
-    private final LoginServices loginServices;
+    //private final LoginServices loginServices;
+
+    @GetMapping("/person")
+    public ResponseEntity<List<PersonDto>> getAllPerson(){
+
+        if(personService.findAllPerson()==null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(personService.findAllPerson(), HttpStatus.OK);
+    }
 
     @GetMapping("/{personId}")
     public ResponseEntity<PersonDto> get(@PathVariable("personId") int id) {
@@ -56,11 +66,11 @@ public class PersonRestController {
         return new ResponseEntity<>(personDto, HttpStatus.OK);
     }
 
-    @GetMapping("/login/{password}/{name}")
+   /* @GetMapping("/login/{password}/{name}")
     public ResponseEntity<String> login(@PathVariable("password") String password, @PathVariable("name") String name){
         String login = loginServices.Login(password,name);
         return new ResponseEntity<>(login,HttpStatus.OK);
-    }
+    }*/
 
 
 }

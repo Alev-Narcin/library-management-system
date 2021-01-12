@@ -19,7 +19,7 @@ public class PersonConverter {
         personDto.setType(personEntity.getType());
         personDto.setPhoneNumber(personEntity.getPhoneNumber());
         personDto.setMemberShipDate(personEntity.getMemberShipDate());
-        personDto.setPassword(personDto.getPassword());
+        //personDto.setPassword(personDto.getPassword());
 
         return personDto;
 

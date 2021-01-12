@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -30,14 +31,21 @@ public class BookService {
     private final PublisherRepository publisherRepository;
 
 
-    @Autowired
+    /*@Autowired
     public BookService setPersonService(PersonService personService) {
         return this;
-    }
+    }*/
 
-    public BookDto findAll(){
-        BookEntity bookEntity = (BookEntity) bookRepository.findAll();
-        return bookConverter.bookEntityToBookDto(bookEntity);
+    public List<BookDto> findAll(){
+        List<BookEntity> allBooks = bookRepository.findAll();
+        List<BookDto> allDto = new ArrayList<>();
+        if(allBooks == null) {
+            return null;
+        }
+        for(int i=0; i<allBooks.size(); i++) {
+            allDto.add(bookConverter.bookEntityToBookDto(allBooks.get(i)));
+        }
+        return allDto;
     }
 
     public BookDto find(int id) {
