@@ -7,25 +7,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
-@CrossOrigin(origins = "http://localhost:3000")
-@RestController    // bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
-                   // Response, browser'a dönülen HTTP mesajı oluyor.
-@RequestMapping(value = "/books", produces = {"application/json"})     // class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
+
+@CrossOrigin(origins = "http://localhost:3000")                                             // bu class'ta tanımlı olan methodların return değerlerini Response'un body'sine yaz.
+@RestController                                                                            // Response, browser'a dönülen HTTP mesajı oluyor.
+@RequestMapping(value = "/books", produces = {"application/json"})                      // class seviyesindeki mapping bütün methodların adreslerinin önünü tanımlıyor.
 @RequiredArgsConstructor
 public class BookRestController {
 
-    private final BookService bookService;
+    private final BookService bookService;                                               // parantez { içerisinde tanımlı olan değişkenler
+                                                                                        // @PathVariable'ında annotate edilen parametre ile eşleştirilir.
+    @GetMapping("/book")                                                               // yani method çağrılırken parametrenin değeri adres satırında karşılık gelen yerdeki değerdir.
 
-    // parantez { içerisinde tanımlı olan değişkenler
-    // @PathVariable'ında annotate edilen parametre ile eşleştirilir.
-    // yani method çağrılırken parametrenin değeri adres satırında karşılık gelen yerdeki değerdir.
-
-    @GetMapping("/book")
     public ResponseEntity<List<BookDto>> getAllBook(){
 
         if(bookService.findAll()==null) {
@@ -44,7 +39,6 @@ public class BookRestController {
         }
     }
 
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/new", consumes={"application/json"})
     public ResponseEntity<BookDto>create(@RequestBody BookDto bookDto) {
@@ -52,12 +46,10 @@ public class BookRestController {
         return new ResponseEntity<>(bookService.create(bookDto), HttpStatus.CREATED);
     }
 
-
     @PutMapping("/{bookId}")
     public ResponseEntity<BookDto> update(@RequestBody BookDto bookDto, @PathVariable("bookId") Integer bookId) {
         return new ResponseEntity<>(bookService.update(bookDto, bookId), HttpStatus.OK);
     }
-
 
     @DeleteMapping("/{bookId}")
     public ResponseEntity<Void> delete(@PathVariable("bookId") Integer bookId) {
@@ -65,7 +57,6 @@ public class BookRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
-
 
     //bookEntity&authorEntity
     @GetMapping("/get-author/{bookId}/{authorId}")
@@ -78,7 +69,6 @@ public class BookRestController {
     public ResponseEntity<PublisherEntity> getPublisher(@PathVariable("bookId") Integer bookId, @PathVariable("publisherId") Integer publisherId) {
         return ResponseEntity.ok(bookService.getPublisher(bookId, publisherId));
     }
-
 
     @GetMapping("/get-borrowed/{bookId}/{borrowedId}")
     public ResponseEntity<BorrowedEntity> getBorrow(@PathVariable("bookId") Integer bookId, @PathVariable("borrowedId") Integer borrowedId) {

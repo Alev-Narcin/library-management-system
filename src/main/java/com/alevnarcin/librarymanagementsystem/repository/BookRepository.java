@@ -14,5 +14,4 @@ import java.util.Set;
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
-    Set<BookEntity> findAllByIsAvailable(Boolean isAvailable);
 }

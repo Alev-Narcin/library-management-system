@@ -1,6 +1,5 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
-import com.alevnarcin.librarymanagementsystem.dto.AuthorDto;
 import com.alevnarcin.librarymanagementsystem.dto.PublisherDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.service.PublisherService;
@@ -8,9 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.NoSuchElementException;
-import java.util.Objects;
+
 
 @RestController
 @RequestMapping(value = "/publishers", produces = {"application/json"})

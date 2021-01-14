@@ -18,10 +18,8 @@ public class AuthorEntity extends BaseEntity {
     @Column(name = "name_surname", nullable = false)
     private String name;
 
-
     @ManyToMany(mappedBy = "authorEntities")
     private Set<BookEntity> bookEntities = new HashSet<>();
-
 
     public AuthorEntity() {
         super();

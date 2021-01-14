@@ -30,12 +30,6 @@ public class BookService {
     private final BorrowedRepository borrowedRepository;
     private final PublisherRepository publisherRepository;
 
-
-    /*@Autowired
-    public BookService setPersonService(PersonService personService) {
-        return this;
-    }*/
-
     public List<BookDto> findAll(){
         List<BookEntity> allBooks = bookRepository.findAll();
         List<BookDto> allDto = new ArrayList<>();
@@ -85,7 +79,6 @@ public class BookService {
         bookRepository.delete(bookEntity);
     }
 
-
     //RELATİON -> bookEntity&authorEntity
     public AuthorEntity getAuthor(Integer authorId, Integer bookId) {
         AuthorEntity authorEntity = authorRepository.findById(authorId).orElse(null);
@@ -132,6 +125,5 @@ public class BookService {
 
         return borrowedRepository.save(borrowedEntity);
     }
-
 
 }

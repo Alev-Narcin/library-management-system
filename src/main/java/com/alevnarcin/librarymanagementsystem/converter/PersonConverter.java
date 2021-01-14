@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component;
 public class PersonConverter {
 
     public PersonDto personEntityToPersonDto(PersonEntity personEntity) {
-
         PersonDto personDto = new PersonDto();
-
         personDto.setEmail(personEntity.getEmail());
         personDto.setAddress(personEntity.getAddress());
         personDto.setId(personEntity.getId());
@@ -19,16 +17,13 @@ public class PersonConverter {
         personDto.setType(personEntity.getType());
         personDto.setPhoneNumber(personEntity.getPhoneNumber());
         personDto.setMemberShipDate(personEntity.getMemberShipDate());
-        //personDto.setPassword(personDto.getPassword());
 
         return personDto;
 
     }
 
     public PersonEntity personDtoToPersonEntity(PersonDto personDto) {
-
         PersonEntity personEntity = new PersonEntity();
-
         personEntity.setEmail(personDto.getEmail());
         personEntity.setName(personDto.getName());
         personEntity.setType(personDto.getType());
@@ -37,7 +32,6 @@ public class PersonConverter {
         personEntity.setTC(personDto.getTC());
         personEntity.setId(personDto.getId());
         personEntity.setMemberShipDate(personDto.getMemberShipDate());
-        // personEntity.setPassword(personDto.getPassword());
 
         return personEntity;
 

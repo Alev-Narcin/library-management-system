@@ -1,6 +1,5 @@
 package com.alevnarcin.librarymanagementsystem.entity;
 
-
 import com.alevnarcin.librarymanagementsystem.entity.base.BaseEntity;
 import com.alevnarcin.librarymanagementsystem.enumeration.PersonType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -40,10 +39,6 @@ public class PersonEntity extends BaseEntity {
 
     @Column(name = "address", nullable = false)
     private String address;
-
-//    @Column(name = "password", nullable = false)
-//    private String password;
-
     public PersonEntity(){
         super();
     }

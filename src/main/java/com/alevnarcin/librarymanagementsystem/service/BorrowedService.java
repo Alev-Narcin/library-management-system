@@ -1,6 +1,5 @@
 package com.alevnarcin.librarymanagementsystem.service;
 
-import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.converter.BorrowedConverter;
 import com.alevnarcin.librarymanagementsystem.dto.BorrowedDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;

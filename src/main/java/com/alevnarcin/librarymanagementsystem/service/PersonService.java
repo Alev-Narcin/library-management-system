@@ -1,24 +1,16 @@
 package com.alevnarcin.librarymanagementsystem.service;
 
-
-import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.converter.PersonConverter;
-import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
-import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.exception.response.ExceptionResponse;
-import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import com.alevnarcin.librarymanagementsystem.repository.BorrowedRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -59,7 +51,6 @@ public class PersonService {
                 entityDtos.add(entityDto);
             }
         }
-
         return entityDtos;
     }
 
@@ -70,7 +61,6 @@ public class PersonService {
         if (entity == null) {
             throw new ExceptionResponse("Oopps cannot find person...");
         }
-
         return personConverter.personEntityToPersonDto(entity);
     }
 
@@ -115,6 +105,5 @@ public class PersonService {
 
         return borrowedRepository.save(borrowedEntity);
     }
-
 
 }

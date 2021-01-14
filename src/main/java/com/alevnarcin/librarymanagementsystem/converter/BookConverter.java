@@ -1,12 +1,9 @@
 package com.alevnarcin.librarymanagementsystem.converter;
 
 import com.alevnarcin.librarymanagementsystem.dto.BookDto;
-import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
-import com.alevnarcin.librarymanagementsystem.enumeration.BookType;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Converter;
 
 @Component
 public class BookConverter {

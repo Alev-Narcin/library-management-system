@@ -1,20 +1,16 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
-
-import com.alevnarcin.librarymanagementsystem.dto.BookDto;
 import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
-import com.alevnarcin.librarymanagementsystem.service.LoginServices;
 import com.alevnarcin.librarymanagementsystem.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.security.util.Password;
-
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
+
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/persons", produces = {"application/json"})
@@ -22,7 +18,6 @@ import java.util.Objects;
 public class PersonRestController {
 
     private final PersonService personService;
-    //private final LoginServices loginServices;
 
     @GetMapping("/person")
     public ResponseEntity<List<PersonDto>> getAllPerson(){
@@ -65,12 +60,5 @@ public class PersonRestController {
         List<PersonDto> personDto = personService.findAll();
         return new ResponseEntity<>(personDto, HttpStatus.OK);
     }
-
-   /* @GetMapping("/login/{password}/{name}")
-    public ResponseEntity<String> login(@PathVariable("password") String password, @PathVariable("name") String name){
-        String login = loginServices.Login(password,name);
-        return new ResponseEntity<>(login,HttpStatus.OK);
-    }*/
-
 
 }

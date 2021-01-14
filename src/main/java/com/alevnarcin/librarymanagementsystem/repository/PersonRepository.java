@@ -10,6 +10,4 @@ import sun.security.util.Password;
 @Repository
 public interface PersonRepository extends JpaRepository<PersonEntity, Integer> {
 
-    /*String existByPasswordAndName(String password, String name);
-*/
 }

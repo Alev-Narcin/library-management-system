@@ -1,9 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.service;
 
-import com.alevnarcin.librarymanagementsystem.converter.BookConverter;
 import com.alevnarcin.librarymanagementsystem.converter.PublisherConverter;
 import com.alevnarcin.librarymanagementsystem.dto.PublisherDto;
-import com.alevnarcin.librarymanagementsystem.entity.AuthorEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PublisherEntity;
 import com.alevnarcin.librarymanagementsystem.exception.response.ExceptionResponse;
@@ -11,11 +9,7 @@ import com.alevnarcin.librarymanagementsystem.repository.BookRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PublisherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +18,6 @@ public class PublisherService {
     private final PublisherRepository publisherRepository;
     private final PublisherConverter publisherConverter;
     private final BookRepository bookRepository;
-
 
     public PublisherDto find(Integer id) {
         PublisherEntity entity = publisherRepository.findById(id).orElse(null);

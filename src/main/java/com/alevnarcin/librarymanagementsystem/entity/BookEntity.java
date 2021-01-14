@@ -11,33 +11,26 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Entity(name = "BOOK")
-// JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
-@Table(name = "t_book")          // tablo adı
+@Entity(name = "BOOK")                                               // JPQL querylerinde kullanacağın isimi tanımla  //Dışta db ile bağlantıyı sağlar. Row isimlerine karşılık gelir.
+@Table(name = "t_book")
 @Getter
-@Setter
-//@EqualsAndHashCode(exclude = "authorEntities")
-// Lombok annotation'ı getter ve setterları yaratıyor, required args constructor, equals and hashCode methodlarını otomatik yaratıyor.
-public class BookEntity extends BaseEntity {
+@Setter                                                             //@EqualsAndHashCode(exclude = "authorEntities")
+public class BookEntity extends BaseEntity {                        // Lombok annotation'ı getter ve setterları yaratıyor, required args constructor, equals and hashCode methodlarını otomatik yaratıyor.
 
     @Column(name = "ISBN", nullable = false, unique = true)
     private String serial_number;
 
-    // kolon tanımları, columnDefinition'ı kullanma
-    @Column(name = "name", nullable = false, length = 64)
+    @Column(name = "name", nullable = false, length = 64)       // kolon tanımları, columnDefinition'ı kullanma
     private String name;
 
-    //ENUM'lar 'type' görevi görür. String yada ORDINAL olabilir.
-    @Enumerated(EnumType.STRING)
-    //Aşk,macera,roman,hikaye,polisiye vb.
-    @Column(name = "type", updatable = false)
+    @Enumerated(EnumType.STRING)                   //ENUM'lar 'type' görevi görür. String yada ORDINAL olabilir.
+    @Column(name = "type", updatable = false)     //Aşk,macera,roman,hikaye,polisiye vb.
     private BookType type;
 
     @Column(name = "is_available", nullable = false)
     private Boolean isAvailable;
 
-    //bağış,satın alma gibi
-    @Column(name = "supply_type", length = 64)
+    @Column(name = "supply_type", length = 64)          //bağış,satın alma gibi
     private String supplyType;
 
     @Column(name = "supply_date", nullable = false, updatable = false)

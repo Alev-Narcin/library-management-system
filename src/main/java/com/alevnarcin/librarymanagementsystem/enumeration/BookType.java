@@ -1,6 +1,5 @@
 package com.alevnarcin.librarymanagementsystem.enumeration;
 
-
 // ORDİNARY de index değerleri karıştığından dolayı başta oluşturulan sıra asla bozulmamlı.Yeni eklenecek kısım(kitap türü) sona eklenmeli.
 public enum BookType {
 
@@ -9,6 +8,5 @@ public enum BookType {
     KISISEL_GELISIM, SIIR, POLISIYE, EDEBIYAT, SOSYOLOJI,
     EKONOMI, MASAL, HIKAYE, BILGISAYAR_INTERNET, HUKUK, SAGLIK,
     SPOR,TRAJEDI ;
-
 
 }

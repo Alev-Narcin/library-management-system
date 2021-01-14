@@ -1,6 +1,5 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
-
 import com.alevnarcin.librarymanagementsystem.dto.AuthorDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.service.AuthorService;
@@ -8,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/authors", produces = {"application/json"})
@@ -21,7 +18,6 @@ public class AuthorRestController {
 
     @GetMapping("/{authorId}")
     public ResponseEntity<AuthorDto> get(@PathVariable("authorId") int id) {
-
         try {
             AuthorDto authorDto =authorService.find(id);
             return new ResponseEntity<>(authorDto, HttpStatus.OK);
@@ -45,12 +41,10 @@ public class AuthorRestController {
     public ResponseEntity<Void> delete(@PathVariable("authorId") Integer authorId) {
         authorService.delete(authorId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
     }
 
     @GetMapping("/get-book/{authorId}/{bookId}")
     public ResponseEntity<BookEntity> getBook(@PathVariable("authorId") Integer authorId, @PathVariable("bookId") Integer bookId) {
         return ResponseEntity.ok(authorService.getBook(authorId, bookId));
     }
-
 }
