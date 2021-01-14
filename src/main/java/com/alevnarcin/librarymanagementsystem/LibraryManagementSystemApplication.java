@@ -1,15 +1,18 @@
 package com.alevnarcin.librarymanagementsystem;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
+@RequiredArgsConstructor
 public class LibraryManagementSystemApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LibraryManagementSystemApplication.class, args);
+       SpringApplication.run(LibraryManagementSystemApplication.class, args);
     }
+
 
     // method adı ile bir tane CommandLineRunner bean'i yarat.
     // Autowired olarak CommandLineRunner istenen yerlere bu yaratılan Bean'ı kullanabiliyor.

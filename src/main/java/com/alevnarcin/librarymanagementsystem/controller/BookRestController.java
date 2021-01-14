@@ -6,6 +6,7 @@ import com.alevnarcin.librarymanagementsystem.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -20,7 +21,7 @@ public class BookRestController {
     private final BookService bookService;                                               // parantez { içerisinde tanımlı olan değişkenler
                                                                                         // @PathVariable'ında annotate edilen parametre ile eşleştirilir.
     @GetMapping("/book")                                                               // yani method çağrılırken parametrenin değeri adres satırında karşılık gelen yerdeki değerdir.
-
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<List<BookDto>> getAllBook(){
 
         if(bookService.findAll()==null) {
