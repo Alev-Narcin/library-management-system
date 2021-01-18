@@ -17,6 +17,7 @@ public class PersonConverter {
         personDto.setType(personEntity.getType());
         personDto.setPhoneNumber(personEntity.getPhoneNumber());
         personDto.setMemberShipDate(personEntity.getMemberShipDate());
+        personDto.setPassword(personEntity.getPassword());
 
         return personDto;
 
@@ -32,6 +33,7 @@ public class PersonConverter {
         personEntity.setTC(personDto.getTC());
         personEntity.setId(personDto.getId());
         personEntity.setMemberShipDate(personDto.getMemberShipDate());
+        personEntity.setPassword(personDto.getPassword());
 
         return personEntity;
 

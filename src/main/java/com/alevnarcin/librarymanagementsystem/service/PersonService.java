@@ -80,6 +80,7 @@ public class PersonService {
         personEntity.setName(personDto.getName());
         personEntity.setEmail(personDto.getEmail());
         personEntity.setPhoneNumber(personDto.getPhoneNumber());
+        personEntity.setPassword((personDto.getPassword()));
 
         return personConverter.personEntityToPersonDto(personRepository.save(personEntity));
     }

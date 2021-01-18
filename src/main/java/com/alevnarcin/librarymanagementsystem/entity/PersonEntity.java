@@ -37,6 +37,9 @@ public class PersonEntity extends BaseEntity {
     @Column(name = "member_ship_date", nullable = false, updatable = false )
     private LocalDateTime memberShipDate;
 
+    @Column(name = "password",nullable = false)
+    private String password;
+
     @Column(name = "address", nullable = false)
     private String address;
     public PersonEntity(){

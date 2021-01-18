@@ -1,6 +1,7 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
 
+import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.models.ERole;
 import com.alevnarcin.librarymanagementsystem.models.Role;
 import com.alevnarcin.librarymanagementsystem.models.User;
@@ -12,6 +13,7 @@ import com.alevnarcin.librarymanagementsystem.repository.RoleRepository;
 import com.alevnarcin.librarymanagementsystem.repository.UserRepository;
 import com.alevnarcin.librarymanagementsystem.security.jwt.JwtUtils;
 import com.alevnarcin.librarymanagementsystem.security.services.UserDetailsImpl;
+import com.alevnarcin.librarymanagementsystem.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +36,9 @@ import java.util.stream.Collectors;
 public class AuthController {
 	@Autowired
 	AuthenticationManager authenticationManager;
+
+	@Autowired
+	PersonService personService;
 
 	@Autowired
 	UserRepository userRepository;
@@ -67,8 +73,16 @@ public class AuthController {
 												 roles));
 	}
 
-	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+	@PostMapping("/SignUp")
+	public ResponseEntity<?> registerUser(@Valid @RequestBody PersonDto person) {
+
+		SignupRequest signUpRequest=new SignupRequest();
+		signUpRequest.setEmail(person.getEmail());
+		signUpRequest.setUsername(person.getName());
+		Set<String> signRole=new HashSet<>();
+		signRole.add("user");
+		signUpRequest.setPassword(person.getPassword());
+		signUpRequest.setRole(signRole);
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
@@ -115,7 +129,8 @@ public class AuthController {
 				}
 			});
 		}
-
+		person.setMemberShipDate(LocalDateTime.now());
+		personService.create(person);
 		user.setRoles(roles);
 		userRepository.save(user);
 

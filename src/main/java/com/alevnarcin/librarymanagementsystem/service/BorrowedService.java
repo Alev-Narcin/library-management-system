@@ -70,7 +70,7 @@ public class BorrowedService {
         return bookRepository.save(bookEntity);
     }
 
-    public PersonEntity getBorrow(Integer bookId, Integer personId) {
+    public PersonEntity saveBorrow(Integer bookId, Integer personId) {
         PersonEntity personEntity = personRepository.findById(personId).orElse(null);
 
         if (personEntity == null) {
