@@ -24,7 +24,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.crypto.Data;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -76,6 +79,7 @@ public class AuthController {
 	@PostMapping("/SignUp")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody PersonDto person) {
 
+		person.setMemberShipDate(LocalDateTime.now());
 		SignupRequest signUpRequest=new SignupRequest();
 		signUpRequest.setEmail(person.getEmail());
 		signUpRequest.setUsername(person.getName());
