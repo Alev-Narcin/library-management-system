@@ -1,7 +1,9 @@
 package com.alevnarcin.librarymanagementsystem.service;
 
 import com.alevnarcin.librarymanagementsystem.converter.BorrowedConverter;
+import com.alevnarcin.librarymanagementsystem.converter.PersonConverter;
 import com.alevnarcin.librarymanagementsystem.dto.BorrowedDto;
+import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
 import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
@@ -12,6 +14,8 @@ import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -22,6 +26,7 @@ public class BorrowedService {
     private final BorrowedConverter borrowedConverter;
     private final BookRepository bookRepository;
     private final PersonRepository personRepository;
+    private final PersonConverter personConverter;
 
     public BorrowedDto find(Integer id) {
         BorrowedEntity borrowedEntity = borrowedRepository.findById(id).orElse(null);
@@ -48,6 +53,18 @@ public class BorrowedService {
 
         return borrowedConverter.borrowedEntityToBorrowedDto(borrowedRepository.save(borrowedEntity));
     }
+    public List<BorrowedDto> list(Integer personId) {
+        List<BorrowedEntity> borrowedEntity = borrowedRepository.findAll();
+        List<BorrowedDto> borrowedDto=new ArrayList<>();
+        if (borrowedEntity == null) {
+            throw new ExceptionResponse("Oopps cannot find borrowed... ");
+        }
+        for(int i=0 ; i<borrowedEntity.size() ; i++) {
+
+            borrowedDto.add(borrowedConverter.borrowedEntityToBorrowedDto(borrowedEntity.get(i)));
+        }
+        return borrowedDto ;
+    }
 
     public void delete(Integer borrowedId) {
         BorrowedEntity borrowedEntity = borrowedRepository.findById(borrowedId).orElse(null);
@@ -70,8 +87,8 @@ public class BorrowedService {
         return bookRepository.save(bookEntity);
     }
 
-    public PersonEntity saveBorrow(Integer bookId, Integer personId) {
-        PersonEntity personEntity = personRepository.findById(personId).orElse(null);
+    public PersonDto saveBorrow(Integer bookId, String name) {
+        PersonEntity personEntity =personRepository.findByName(name).orElse(null);
 
         if (personEntity == null) {
             throw new ExceptionResponse("Oopps cannot find person... ");
@@ -96,7 +113,7 @@ public class BorrowedService {
 
             bookRepository.save(bookEntity);
 
-            return personRepository.save(personEntity);
+            return personConverter.personEntityToPersonDto(personRepository.save(personEntity));
         }
     }
 }

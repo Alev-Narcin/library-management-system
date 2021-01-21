@@ -13,6 +13,8 @@ public class BorrowedConverter {
         borrowedDto.setBorrowStartDate(borrowedEntity.getBorrowStartDate());
         borrowedDto.setBorrowEndDate((borrowedEntity.getBorrowEndDate()));
         borrowedDto.setBorrowReturnDate(borrowedEntity.getBorrowReturnDate());
+        borrowedDto.setBook_entity_id(borrowedEntity.getPersonEntity().getId());
+        borrowedDto.setPerson_entity_id(borrowedEntity.getBookEntity().getId());
 
         return borrowedDto;
     }
@@ -23,7 +25,6 @@ public class BorrowedConverter {
         borrowedEntity.setBorrowEndDate(borrowedDto.getBorrowEndDate());
         borrowedEntity.setBorrowStartDate(borrowedDto.getBorrowStartDate());
         borrowedEntity.setBorrowReturnDate(borrowedDto.getBorrowReturnDate());
-
         return borrowedEntity;
 
 

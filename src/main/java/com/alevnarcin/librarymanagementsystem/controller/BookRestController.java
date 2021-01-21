@@ -20,8 +20,7 @@ public class BookRestController {
 
     private final BookService bookService;                                               // parantez { içerisinde tanımlı olan değişkenler
                                                                                         // @PathVariable'ında annotate edilen parametre ile eşleştirilir.
-    @GetMapping("/book")                                                               // yani method çağrılırken parametrenin değeri adres satırında karşılık gelen yerdeki değerdir.
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/book")
     public ResponseEntity<List<BookDto>> getAllBook(){
 
         if(bookService.findAll()==null) {

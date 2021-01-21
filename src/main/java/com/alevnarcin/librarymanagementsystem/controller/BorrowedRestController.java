@@ -1,13 +1,17 @@
 package com.alevnarcin.librarymanagementsystem.controller;
 
 import com.alevnarcin.librarymanagementsystem.dto.BorrowedDto;
+import com.alevnarcin.librarymanagementsystem.dto.PersonDto;
 import com.alevnarcin.librarymanagementsystem.entity.BookEntity;
+import com.alevnarcin.librarymanagementsystem.entity.BorrowedEntity;
 import com.alevnarcin.librarymanagementsystem.entity.PersonEntity;
 import com.alevnarcin.librarymanagementsystem.service.BorrowedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -49,11 +53,15 @@ public class BorrowedRestController {
     public ResponseEntity<BookEntity> getBook(@PathVariable("bookId") Integer bookId) {
         return ResponseEntity.ok(borrowedService.getBook(bookId));
     }
+    @GetMapping("/get-borrows/{personId}")
+    public ResponseEntity<List<BorrowedDto>> getBorrows(@PathVariable("personId") Integer personId) {
+        return ResponseEntity.ok(borrowedService.list(personId));
+    }
 
     //personEntity&bookEntity
-    @GetMapping("/get-borrow/{personId}/{bookId}")
-    public ResponseEntity<PersonEntity> getBorrow(@PathVariable("personId") Integer personId , @PathVariable("bookId") Integer bookId) {
-        return ResponseEntity.ok(borrowedService.saveBorrow(personId, bookId));
+    @GetMapping("/get-borrow/{bookId}/{name}")
+    public ResponseEntity<PersonDto> getBorrow(@PathVariable("bookId") Integer bookId , @PathVariable("name") String name) {
+        return ResponseEntity.ok(borrowedService.saveBorrow(bookId,name));
     }
 
 }

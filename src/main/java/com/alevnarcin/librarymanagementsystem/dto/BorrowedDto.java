@@ -19,5 +19,7 @@ public class BorrowedDto {
     private LocalDate borrowStartDate;;
     private LocalDate borrowEndDate;
     private LocalDate borrowReturnDate;
+    private Integer book_entity_id;
+    private Integer person_entity_id;
 
 }
