@@ -16,10 +16,11 @@ import java.time.LocalDate;
 public class BorrowedDto {
 
     private Integer id;
-    private LocalDate borrowStartDate;;
+    private LocalDate borrowStartDate;
     private LocalDate borrowEndDate;
     private LocalDate borrowReturnDate;
     private Integer book_entity_id;
     private Integer person_entity_id;
-
+    private BookDto bookDto;
+    private PersonDto personDto;
 }

@@ -13,6 +13,7 @@ import com.alevnarcin.librarymanagementsystem.repository.BorrowedRepository;
 import com.alevnarcin.librarymanagementsystem.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,17 +54,21 @@ public class BorrowedService {
 
         return borrowedConverter.borrowedEntityToBorrowedDto(borrowedRepository.save(borrowedEntity));
     }
+
     public List<BorrowedDto> list(Integer personId) {
         List<BorrowedEntity> borrowedEntity = borrowedRepository.findAll();
-        List<BorrowedDto> borrowedDto=new ArrayList<>();
+        List<BorrowedDto> borrowedDto = new ArrayList<>();
         if (borrowedEntity == null) {
             throw new ExceptionResponse("Oopps cannot find borrowed... ");
         }
-        for(int i=0 ; i<borrowedEntity.size() ; i++) {
-
+        for (int i = 0; i < borrowedEntity.size(); i++) {
             borrowedDto.add(borrowedConverter.borrowedEntityToBorrowedDto(borrowedEntity.get(i)));
         }
-        return borrowedDto ;
+
+        // get book by id set dto book name
+
+
+        return borrowedDto;
     }
 
     public void delete(Integer borrowedId) {
@@ -88,7 +93,7 @@ public class BorrowedService {
     }
 
     public PersonDto saveBorrow(Integer bookId, String name) {
-        PersonEntity personEntity =personRepository.findByName(name).orElse(null);
+        PersonEntity personEntity = personRepository.findByName(name).orElse(null);
 
         if (personEntity == null) {
             throw new ExceptionResponse("Oopps cannot find person... ");
